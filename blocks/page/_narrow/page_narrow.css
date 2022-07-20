@@ -1,0 +1,5 @@
+@media screen and (max-width: 400px) {
+    .page_narrow {
+        margin: 0 19px;
+    }
+}
