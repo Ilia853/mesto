@@ -1,7 +1,7 @@
 .popup__close-button {
     cursor: pointer;
     border: none;
-    background-image: url(../../../vendor/pictures/popup__close-button.svg);
+    background-image: url(../../../images/popup__close-button.svg);
     background-color: #000000;
     width: 32px;
     height: 32px;
@@ -17,6 +17,10 @@
 
 @media screen and (max-width: 600px) {
     .popup__close-button {
+        top: -36px;
         right: 0;
+        width: 20px;
+        height: 20px;
+        background-image: url(../../../images/popup__close-button-mobile.svg);
     }
 }

@@ -1,17 +1,22 @@
-.popup__form-job {
+.popup__input {
     max-width: 358px;
     padding: 0;
     border: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     font-weight: 400;
     font-size: 14px;
-    line-height: 17px;
+    line-height: 37px;
     color: #000000;
+    margin-bottom: 30px;
+}
+
+.popup__input:last-of-type {
     margin-bottom: 48px;
 }
 
+
 @media screen and (max-width: 550px) {
-    .popup__form-job {
+    .popup__input {
         max-width: 238px;
     }
 }
