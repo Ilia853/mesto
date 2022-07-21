@@ -1,0 +1,5 @@
+@media screen and (max-width: 400px) {
+    .elements_size_narrow {
+        margin: 36px 19px 0;
+    }
+}
