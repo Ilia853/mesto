@@ -8,8 +8,6 @@
 @import url(../blocks/header/__logo/header__logo.css);
 
 @import url(../blocks/profile/profile.css);
-@import url(../blocks/profile/_size/profile_size_wide.css);
-@import url(../blocks/profile/_size/profile_size_narrow.css);
 @import url(../blocks/profile/__box/profile__box.css);
 @import url(../blocks/profile/__image/profile__image.css);
 @import url(../blocks/profile/__info/profile__info.css);
@@ -21,8 +19,6 @@
 
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/elements/__list/elements__list.css);
-@import url(../blocks/elements/_size/elements_size_wide.css);
-@import url(../blocks/elements/_size/elements_size_narrow.css);
 @import url(../blocks/element/element.css);
 @import url(../blocks/element/__image/element__image.css);
 @import url(../blocks/element/__box/element__box.css);
