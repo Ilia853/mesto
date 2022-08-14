@@ -160,5 +160,3 @@ profileEditCloseButton.addEventListener('click', () => closePopup(popupElementEd
 profileMestoCloseButton.addEventListener('click', () => closePopup(popupElementMesto));
 
 formElement.addEventListener('submit', formSubmitHandler);
-
-formElementMesto.addEventListener('submit', addNewCard);
