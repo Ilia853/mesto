@@ -27,7 +27,7 @@
         </section>
         <section class="elements">
             <div class="elements__list">
-                <div class="element">
+                <!-- <div class="element">
                     <img class="element__image" src="./images/element__karachaevsk.jpg" alt="Фотография Карачаевска">
                         <div class="element__box">
                             <h2 class="element__title">Карачаевск</h2>
@@ -68,16 +68,16 @@
                         <h2 class="element__title">Домбай</h2>
                         <button class="element__like-button" type="button"></button>
                     </div>
-                </div>
+                </div> -->
             </div>
         </section>
     </main>
     <footer class="footer">
         &#169; 2020 Mesto Russia
     </footer>
-    <div class="popup">
+    <div class="popup popup_type_edit">
         <div class="popup__container">
-            <button type="button" class="popup__close-button"></button>
+            <button type="button" class="popup__close-button popup__close-button_type_edit"></button>
             <h2 class="popup__title">Редактировать профиль</h2>
             <form class="popup__form" id="1" name="form-name-job">
                 <input type="text" name="form-name" class="popup__input popup__input_type_name">
@@ -86,6 +86,27 @@
             </form>
         </div>
     </div>
-    <script src="./scripts/index.js"></script>
+    <div class="popup popup_type_mesto">
+        <div class="popup__container">
+            <button type="button" class="popup__close-button popup__close-button_type_mesto"></button>
+            <h2 class="popup__title">Новое место</h2>
+            <form class="popup__form popup__form_type_mesto" id="2" name="form-name-job">
+                <input type="text" name="form-mesto" class="popup__input popup__input_type_mesto">
+                <input type="text" name="form-link" class="popup__input popup__input_type_link">
+                <button type="submit" class="popup__form-button">Создать</button>
+            </form>
+        </div>
+    </div>
+    <template id="card-element">
+        <div class="element">
+            <img class="element__image">
+            <button class="element__del-button" type="button"></button>
+                <div class="element__box">
+                    <h2 class="element__title"></h2>
+                    <button class="element__like-button" type="button"></button>
+                </div>
+        </div>
+    </template>
+    <script src="./scripts/index.js" defer></script>
 </body>
 </html>
