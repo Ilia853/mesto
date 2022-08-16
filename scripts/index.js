@@ -45,6 +45,7 @@ const selectors = {
   elementTitle: '.element__title',
   elementImage: '.element__image',
   elementLikeButton: '.element__like-button',
+  elementDelButton: '.element__del-button',
 };
 
 const popupElementEdit = document.querySelector(selectors.popupElementEdit);
@@ -63,6 +64,7 @@ const profileEditCloseButton = document.querySelector(selectors.profileEditClose
 const profileMestoCloseButton = document.querySelector(selectors.profileMestoCloseButton);
 const template = document.querySelector(selectors.template).content.children[0];
 const elementsList = document.querySelector(selectors.elementsList);
+const elementDelButton = document.querySelector(selectors.elementDelButton);
 
 function createCards (value) {
   const createElement = template.cloneNode(true);
@@ -78,10 +80,12 @@ function createCards (value) {
 
   function changeLike (type) {
     type.classList.toggle('element__like-button_active');
-    console.log('click');
   };
 
   elementLikeButton.addEventListener('click', () => changeLike(elementLikeButton));
+  
+
+  
 };
 
 function createInitialCards () {
@@ -160,3 +164,15 @@ profileEditCloseButton.addEventListener('click', () => closePopup(popupElementEd
 profileMestoCloseButton.addEventListener('click', () => closePopup(popupElementMesto));
 
 formElement.addEventListener('submit', formSubmitHandler);
+
+formElementMesto.addEventListener('submit', addNewCard);
+
+elementsList.addEventListener('click', function(el){
+  
+  let target = el.target;
+  
+  if(target.classList.contains('element__del-button')){
+    let currentElement = target.closest('.element');
+    currentElement.remove(); 
+  };
+});
