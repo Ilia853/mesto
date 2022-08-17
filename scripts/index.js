@@ -46,6 +46,10 @@ const selectors = {
   elementImage: '.element__image',
   elementLikeButton: '.element__like-button',
   elementDelButton: '.element__del-button',
+  imagePopup: '.image-popup',
+  imageCloseButton: '.popup__close-button_type_image',
+  imagePopupPic: '.image-popup__pic',
+  imagePopupTitle: '.image-popup__title',
 };
 
 const popupElementEdit = document.querySelector(selectors.popupElementEdit);
@@ -83,9 +87,25 @@ function createCards (value) {
   };
 
   elementLikeButton.addEventListener('click', () => changeLike(elementLikeButton));
-  
 
-  
+  const imagePopup = document.querySelector(selectors.imagePopup);
+  const imageCloseButton = document.querySelector(selectors.imageCloseButton);
+  const imagePopupPic = document.querySelector(selectors.imagePopupPic);
+  const imagePopupTitle = document.querySelector(selectors.imagePopupTitle);
+
+  function openImagePopup (type) {
+    type.classList.add('image-popup_opened');
+
+    imagePopupTitle.textContent = value.name;
+    imagePopupPic.src = value.link;
+  };
+
+  function closePopupImage (type) {
+    type.classList.remove('image-popup_opened');
+  };
+
+  elementImage.addEventListener('click', () => openImagePopup(imagePopup));
+  imageCloseButton.addEventListener('click', () => closePopupImage(imagePopup));
 };
 
 function createInitialCards () {
@@ -112,6 +132,25 @@ function createNewCard () {
   };
 
   elementLikeButton.addEventListener('click', () => changeLike(elementLikeButton));
+
+  const imagePopup = document.querySelector(selectors.imagePopup);
+  const imageCloseButton = document.querySelector(selectors.imageCloseButton);
+  const imagePopupPic = document.querySelector(selectors.imagePopupPic);
+  const imagePopupTitle = document.querySelector(selectors.imagePopupTitle);
+
+  function openImagePopup (type) {
+    type.classList.add('image-popup_opened');
+
+    imagePopupTitle.textContent = mestoInput.value;
+    imagePopupPic.src = linkInput.value;
+  };
+
+  function closePopupImage (type) {
+    type.classList.remove('image-popup_opened');
+  };
+
+  elementImage.addEventListener('click', () => openImagePopup(imagePopup));
+  imageCloseButton.addEventListener('click', () => closePopupImage(imagePopup));
 };
 
 function addNewCard (evt) {
