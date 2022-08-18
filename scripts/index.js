@@ -47,7 +47,7 @@ const selectors = {
   elementLikeButton: '.element__like-button',
   elementDelButton: '.element__del-button',
   imagePopup: '.image-popup',
-  imageCloseButton: '.popup__close-button_type_image',
+  imageCloseButton: '.image-popup__close-button',
   imagePopupPic: '.image-popup__pic',
   imagePopupTitle: '.image-popup__title',
 };
