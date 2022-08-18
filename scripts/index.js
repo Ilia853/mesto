@@ -164,12 +164,6 @@ function setPopupMestoValue () {
   linkInput.value = 'Ссылка на картинку';
 };
 
-// elementsList.addEventListener('click', function (event) {
-//     if (event.target.className === 'element__image'){
-//     console.log('CLICK');
-//     }
-// });
-
 function setPopupEditValue () {
     nameInput.value = profileName.textContent.trim();
     jobInput.value = profileJob.textContent.trim();
