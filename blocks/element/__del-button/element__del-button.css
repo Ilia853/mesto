@@ -11,3 +11,7 @@
     right: 20px;
     cursor: pointer;
 }
+
+.element__del-button:hover {
+    opacity: .6;
+}

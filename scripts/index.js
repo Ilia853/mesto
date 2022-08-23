@@ -32,7 +32,7 @@ const selectors = {
   profileMestoButton: '.profile__add-button',
   profileName: '.profile__title',
   profileJob: '.profile__subtitle',
-  formElement: '.popup__form',
+  formElementProfile: '.popup__form_type_edit',
   formElementMesto: '.popup__form_type_mesto',
   nameInput: '.popup__input_type_name',
   jobInput: '.popup__input_type_job',
@@ -58,7 +58,7 @@ const profileEditButton = document.querySelector(selectors.profileEditButton);
 const profileMestoButton = document.querySelector(selectors.profileMestoButton);
 const profileName = document.querySelector(selectors.profileName);
 const profileJob = document.querySelector(selectors.profileJob);
-const formElement = document.querySelector(selectors.formElement);
+const formElementProfile = document.querySelector(selectors.formElementProfile);
 const formElementMesto = document.querySelector(selectors.formElementMesto);
 const nameInput = document.querySelector(selectors.nameInput);
 const jobInput = document.querySelector(selectors.jobInput);
@@ -69,6 +69,10 @@ const profileMestoCloseButton = document.querySelector(selectors.profileMestoClo
 const template = document.querySelector(selectors.template).content.children[0];
 const elementsList = document.querySelector(selectors.elementsList);
 const elementDelButton = document.querySelector(selectors.elementDelButton);
+const imagePopup = document.querySelector(selectors.imagePopup);
+const imageCloseButton = document.querySelector(selectors.imageCloseButton);
+const imagePopupPic = document.querySelector(selectors.imagePopupPic);
+const imagePopupTitle = document.querySelector(selectors.imagePopupTitle);
 
 function createCards (value) {
   const createElement = template.cloneNode(true);
@@ -77,6 +81,7 @@ function createCards (value) {
 
   elementTitle.textContent = value.name;
   elementImage.src = value.link;
+  elementImage.alt = value.name;
 
   elementsList.append(createElement);
 
@@ -88,16 +93,12 @@ function createCards (value) {
 
   elementLikeButton.addEventListener('click', () => changeLike(elementLikeButton));
 
-  const imagePopup = document.querySelector(selectors.imagePopup);
-  const imageCloseButton = document.querySelector(selectors.imageCloseButton);
-  const imagePopupPic = document.querySelector(selectors.imagePopupPic);
-  const imagePopupTitle = document.querySelector(selectors.imagePopupTitle);
-
   function openImagePopup (type) {
     type.classList.add('image-popup_opened');
 
     imagePopupTitle.textContent = value.name;
     imagePopupPic.src = value.link;
+    imagePopupPic.alt = value.name;
   };
 
   function closePopupImage (type) {
@@ -174,7 +175,7 @@ function changePopupValue () {
     profileJob.textContent = jobInput.value;
 };
 
-function formSubmitHandler (evt) {
+function handleFormSubmit (evt) {
     evt.preventDefault ();
     changePopupValue ();
     closePopup (popupElementEdit);
@@ -196,7 +197,7 @@ profileEditCloseButton.addEventListener('click', () => closePopup(popupElementEd
 
 profileMestoCloseButton.addEventListener('click', () => closePopup(popupElementMesto));
 
-formElement.addEventListener('submit', formSubmitHandler);
+formElementProfile.addEventListener('submit', handleFormSubmit);
 
 formElementMesto.addEventListener('submit', addNewCard);
 
@@ -205,7 +206,7 @@ elementsList.addEventListener('click', function(el){
   let target = el.target;
   
   if(target.classList.contains('element__del-button')){
-    let currentElement = target.closest('.element');
+    const currentElement = target.closest('.element');
     currentElement.remove(); 
   };
 });
