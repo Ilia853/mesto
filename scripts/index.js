@@ -122,7 +122,7 @@ renderCards (list);
 
 function addNewCard (evt) {
   evt.preventDefault ();
-  renderCards ();
+  renderCards ()=>;
   closePopup(popupElementMesto);
 }
 
