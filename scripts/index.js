@@ -74,15 +74,15 @@ const imageCloseButton = document.querySelector(selectors.imageCloseButton);
 const imagePopupPic = document.querySelector(selectors.imagePopupPic);
 const imagePopupTitle = document.querySelector(selectors.imagePopupTitle);
 
-function createCard (value) {
+function createCard (name, link) {
 
   const elementForm = template.cloneNode(true);
   const elementTitle = elementForm.querySelector(selectors.elementTitle);
   const elementImage = elementForm.querySelector(selectors.elementImage);
  
-  elementTitle.textContent = value.name;
-  elementImage.src = value.link;
-  elementImage.alt = value.name;
+  elementTitle.textContent = name.name;
+  elementImage.src = link.link;
+  elementImage.alt = name.name;
 
   return elementForm;
 };
@@ -112,13 +112,13 @@ function createCard (value) {
 //   console.log(value);
 // };
 
-const list = initialCards.map(createCard);
 
-function renderCards (value) {
-  elementsList.prepend(...value);
+function renderCards () {
+  const list = initialCards.map(createCard);
+  elementsList.prepend(...list);
 };
 
-renderCards (list);
+renderCards ();
 
 function addNewCard (evt) {
   evt.preventDefault ();
