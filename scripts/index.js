@@ -86,7 +86,15 @@ function createCard (name, link) {
   elementImage.src = link;
   elementImage.alt = name;
 
+  const elementLikeButton = elementForm.querySelector(selectors.elementLikeButton);
+
+  elementLikeButton.addEventListener('click', () => changeLike(elementLikeButton));
+
   return elementForm;
+};
+
+function changeLike (type) {
+  type.classList.toggle('element__like-button_active');
 };
 
 function renderCards () {
@@ -102,13 +110,6 @@ function addNewCard (evt) {
   elementsList.prepend(card);
   closePopup(popupElementMesto);
 };
-
-function setImagePopupValue () {
-  imagePopupTitle.textContent = value.name;
-  imagePopupPic.src = value.link;
-  imagePopupPic.alt = value.name;
-}
-
 
 //   const elementLikeButton = createElement.querySelector(selectors.elementLikeButton);
 
@@ -204,11 +205,11 @@ function handleFormSubmit (evt) {
 };
 
 function closePopup (type) {
-    type.classList.remove('popup_opened');
+    type.classList.remove('image-popup_opened');
 };
 
 function openPopup(type) {
-    type.classList.add('popup_opened');
+    type.classList.add('image-popup_opened');
 }
 
 profileEditButton.addEventListener('click', () => openPopup(popupElementEdit), setPopupEditValue());
@@ -219,9 +220,35 @@ profileEditCloseButton.addEventListener('click', () => closePopup(popupElementEd
 
 profileMestoCloseButton.addEventListener('click', () => closePopup(popupElementMesto));
 
+// elementsList.addEventListener('click', function (el) {
+//   openPopup(imagePopup);
+
+//   let target = el.target;
+//   if(target.classList.contains('element__image')){
+//   const currentElement = target.closest('.element__image');
+  
+//   imagePopupPic.src = currentElement.getAttribute('src');
+//   imagePopupTitle.textContent = currentElement.getAttribute('alt');
+// };
+// });
+
 formElementProfile.addEventListener('submit', handleFormSubmit);
 
 formElementMesto.addEventListener('submit', addNewCard);
+
+elementImage.addEventListener('click', function (event) {
+  
+  let target = event.target;
+
+  if(target.classList.contains('element__image')) {
+    const currentElement = target.closest('.element__image');
+    imagePopupPic.src = currentElement.getAttribute('src');
+    imagePopupTitle.textContent = currentElement.getAttribute('alt');
+    openPopup(imagePopup);
+
+
+  }
+});
 
 elementsList.addEventListener('click', function(el){
   
@@ -231,4 +258,6 @@ elementsList.addEventListener('click', function(el){
     const currentElement = target.closest('.element');
     currentElement.remove(); 
   };
+
+  
 });
