@@ -79,11 +79,19 @@ function createCard (name, link) {
   const elementForm = template.cloneNode(true);
   const elementTitle = elementForm.querySelector(selectors.elementTitle);
   const elementImage = elementForm.querySelector(selectors.elementImage);
-  
+
   elementTitle.textContent = name;
   elementImage.src = link;
   elementImage.alt = name;
-  
+
+  const elementLikeButton = elementForm.querySelector(selectors.elementLikeButton);
+
+  function changeLike (type) {
+    type.classList.toggle('element__like-button_active');
+  };
+
+  elementLikeButton.addEventListener('click', () => changeLike(elementLikeButton));
+
   return elementForm;
 };
 
@@ -100,13 +108,6 @@ function addNewCard (evt) {
   elementsList.prepend(card);
   closePopup(popupElementMesto);
 };
-
-function setImagePopupValue () {
-  imagePopupTitle.textContent = value.name;
-  imagePopupPic.src = value.link;
-  imagePopupPic.alt = value.name;
-};
-
 
 //   const elementLikeButton = createElement.querySelector(selectors.elementLikeButton);
 
