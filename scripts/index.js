@@ -73,19 +73,40 @@ const imagePopup = document.querySelector(selectors.imagePopup);
 const imageCloseButton = document.querySelector(selectors.imageCloseButton);
 const imagePopupPic = document.querySelector(selectors.imagePopupPic);
 const imagePopupTitle = document.querySelector(selectors.imagePopupTitle);
+const elementImage = document.querySelector(selectors.elementImage);
 
 function createCard (name, link) {
-
   const elementForm = template.cloneNode(true);
   const elementTitle = elementForm.querySelector(selectors.elementTitle);
   const elementImage = elementForm.querySelector(selectors.elementImage);
- 
-  elementTitle.textContent = name.name;
-  elementImage.src = link.link;
-  elementImage.alt = name.name;
-
+  
+  elementTitle.textContent = name;
+  elementImage.src = link;
+  elementImage.alt = name;
+  
   return elementForm;
 };
+
+function renderCards () {
+  const list = initialCards.map(value => createCard(value.name, value.link));
+  elementsList.prepend(...list);
+};
+
+renderCards ();
+
+function addNewCard (evt) {
+  evt.preventDefault();
+  let card = createCard(mestoInput.value, linkInput.value);
+  elementsList.prepend(card);
+  closePopup(popupElementMesto);
+};
+
+function setImagePopupValue () {
+  imagePopupTitle.textContent = value.name;
+  imagePopupPic.src = value.link;
+  imagePopupPic.alt = value.name;
+};
+
 
 //   const elementLikeButton = createElement.querySelector(selectors.elementLikeButton);
 
@@ -112,19 +133,6 @@ function createCard (name, link) {
 //   console.log(value);
 // };
 
-
-function renderCards () {
-  const list = initialCards.map(createCard);
-  elementsList.prepend(...list);
-};
-
-renderCards ();
-
-function addNewCard (evt) {
-  evt.preventDefault ();
-  renderCards ();
-  closePopup(popupElementMesto);
-}
 
 
 // function createNewCard () {
