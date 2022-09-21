@@ -1,55 +1,55 @@
 const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-  ];
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
 
 const selectors = {
-  popupElementEdit: '.popup_type_edit',
-  popupElementMesto: '.popup_type_mesto',
-  profileEditButton: '.profile__edit-button',
-  profileMestoButton: '.profile__add-button',
-  profileName: '.profile__title',
-  profileJob: '.profile__subtitle',
-  formElementProfile: '.popup__form_type_edit',
-  formElementMesto: '.popup__form_type_mesto',
-  nameInput: '.popup__input_type_name',
-  jobInput: '.popup__input_type_job',
-  mestoInput: '.popup__input_type_mesto',
-  linkInput: '.popup__input_type_link',
-  profileEditCloseButton: '.popup__close-button_type_edit',
-  profileMestoCloseButton: '.popup__close-button_type_mesto',
-  template: '#card-element',
-  elementsList: '.elements__list',
-  elementTitle: '.element__title',
-  elementImage: '.element__image',
-  elementLikeButton: '.element__like-button',
-  elementDelButton: '.element__del-button',
-  imagePopup: '.image-popup',
-  imageCloseButton: '.image-popup__close-button',
-  imagePopupPic: '.image-popup__pic',
-  imagePopupTitle: '.image-popup__title',
+popupElementEdit: '.popup_type_edit',
+popupElementMesto: '.popup_type_mesto',
+profileEditButton: '.profile__edit-button',
+profileMestoButton: '.profile__add-button',
+profileName: '.profile__title',
+profileJob: '.profile__subtitle',
+formElementProfile: '.popup__form_type_edit',
+formElementMesto: '.popup__form_type_mesto',
+nameInput: '.popup__input_type_name',
+jobInput: '.popup__input_type_job',
+mestoInput: '.popup__input_type_mesto',
+linkInput: '.popup__input_type_link',
+profileEditCloseButton: '.popup__close-button_type_edit',
+profileMestoCloseButton: '.popup__close-button_type_mesto',
+template: '#card-element',
+elementsList: '.elements__list',
+elementTitle: '.element__title',
+elementImage: '.element__image',
+elementLikeButton: '.element__like-button',
+elementDelButton: '.element__del-button',
+imagePopup: '.image-popup',
+imageCloseButton: '.image-popup__close-button',
+imagePopupPic: '.image-popup__pic',
+imagePopupTitle: '.image-popup__title',
 };
 
 const popupElementEdit = document.querySelector(selectors.popupElementEdit);
@@ -75,29 +75,31 @@ const imagePopupPic = document.querySelector(selectors.imagePopupPic);
 const imagePopupTitle = document.querySelector(selectors.imagePopupTitle);
 const elementImage = document.querySelector(selectors.elementImage);
 
+
 function createCard (name, link) {
-  const elementForm = template.cloneNode(true);
-  const elementTitle = elementForm.querySelector(selectors.elementTitle);
-  const elementImage = elementForm.querySelector(selectors.elementImage);
 
-  elementTitle.textContent = name;
-  elementImage.src = link;
-  elementImage.alt = name;
+const elementForm = template.cloneNode(true);
+const elementTitle = elementForm.querySelector(selectors.elementTitle);
+const elementImage = elementForm.querySelector(selectors.elementImage);
 
-  const elementLikeButton = elementForm.querySelector(selectors.elementLikeButton);
+elementTitle.textContent = name;
+elementImage.src = link;
+elementImage.alt = name;
 
-  function changeLike (type) {
-    type.classList.toggle('element__like-button_active');
-  };
+const elementLikeButton = elementForm.querySelector(selectors.elementLikeButton);
 
-  elementLikeButton.addEventListener('click', () => changeLike(elementLikeButton));
+elementLikeButton.addEventListener('click', () => changeLike(elementLikeButton));
 
-  return elementForm;
+return elementForm;
+};
+
+function changeLike (type) {
+type.classList.toggle('element__like-button_active');
 };
 
 function renderCards () {
-  const list = initialCards.map(value => createCard(value.name, value.link));
-  elementsList.prepend(...list);
+const list = initialCards.map(value => createCard(value.name, value.link));
+elementsList.prepend(...list);
 };
 
 renderCards ();
@@ -106,6 +108,8 @@ function addNewCard (evt) {
   evt.preventDefault();
   let card = createCard(mestoInput.value, linkInput.value);
   elementsList.prepend(card);
+  mestoInput.value = 'Название';
+  linkInput.value = 'Ссылка на картинку';
   closePopup(popupElementMesto);
 };
 
@@ -180,39 +184,40 @@ function addNewCard (evt) {
 //   createNewCard ();
 //   closePopup(popupElementMesto);
 // }
- 
-function setPopupMestoValue () {
-  mestoInput.value = 'Название';
-  linkInput.value = 'Ссылка на картинку';
-};
+
+// function clearPopupMestoValue () {
+//   mestoInput.value = 'Название';
+//   linkInput.value = 'Ссылка на картинку';
+//   console.log('click');
+// };
 
 function setPopupEditValue () {
-    nameInput.value = profileName.textContent.trim();
-    jobInput.value = profileJob.textContent.trim();
+  nameInput.value = profileName.textContent.trim();
+  jobInput.value = profileJob.textContent.trim();
 };
 
 function changePopupValue () {
-    profileName.textContent = nameInput.value;
-    profileJob.textContent = jobInput.value;
+  profileName.textContent = nameInput.value;
+  profileJob.textContent = jobInput.value;
 };
 
 function handleFormSubmit (evt) {
-    evt.preventDefault ();
-    changePopupValue ();
-    closePopup (popupElementEdit);
+  evt.preventDefault ();
+  changePopupValue ();
+  closePopup (popupElementEdit);
 };
 
 function closePopup (type) {
-    type.classList.remove('popup_opened');
+  type.classList.remove('image-popup_opened');
 };
 
 function openPopup(type) {
-    type.classList.add('popup_opened');
+  type.classList.add('image-popup_opened');
 }
 
 profileEditButton.addEventListener('click', () => openPopup(popupElementEdit), setPopupEditValue());
 
-profileMestoButton.addEventListener('click', () => openPopup(popupElementMesto), setPopupMestoValue());
+profileMestoButton.addEventListener('click', () => openPopup(popupElementMesto)); //setPopupMestoValue());
 
 profileEditCloseButton.addEventListener('click', () => closePopup(popupElementEdit));
 
@@ -222,10 +227,24 @@ formElementProfile.addEventListener('submit', handleFormSubmit);
 
 formElementMesto.addEventListener('submit', addNewCard);
 
-elementsList.addEventListener('click', function(el){
-  
-  let target = el.target;
-  
+elementsList.addEventListener('click', function (event) {
+
+  let target = event.target;
+
+  if(target.classList.contains('element__image')) {
+    const currentElement = target.closest('.element__image');
+    imagePopupPic.src = currentElement.getAttribute('src');
+    imagePopupTitle.textContent = currentElement.getAttribute('alt');
+    openPopup(imagePopup);
+  }
+});
+
+imageCloseButton.addEventListener('click',() => closePopup(imagePopup));
+
+elementsList.addEventListener('click', function(event){
+
+  let target = event.target;
+
   if(target.classList.contains('element__del-button')){
     const currentElement = target.closest('.element');
     currentElement.remove(); 
