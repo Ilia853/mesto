@@ -78,28 +78,55 @@ const elementImage = document.querySelector(selectors.elementImage);
 
 function createCard (name, link) {
 
-const elementForm = template.cloneNode(true);
-const elementTitle = elementForm.querySelector(selectors.elementTitle);
-const elementImage = elementForm.querySelector(selectors.elementImage);
+  const elementForm = template.cloneNode(true);
+  const elementTitle = elementForm.querySelector(selectors.elementTitle);
+  const elementImage = elementForm.querySelector(selectors.elementImage);
 
-elementTitle.textContent = name;
-elementImage.src = link;
-elementImage.alt = name;
+  elementTitle.textContent = name;
+  elementImage.src = link;
+  elementImage.alt = name;
 
-const elementLikeButton = elementForm.querySelector(selectors.elementLikeButton);
+  const elementLikeButton = elementForm.querySelector(selectors.elementLikeButton);
+  elementLikeButton.addEventListener('click', () => changeLike(elementLikeButton));
 
-elementLikeButton.addEventListener('click', () => changeLike(elementLikeButton));
+  return elementForm;
+};
 
-return elementForm;
+function setEventListeners () {
+
+  elementsList.addEventListener('click', function (event) {
+
+    let target = event.target;
+  
+    if(target.classList.contains('element__image')) {
+      const currentElement = target.closest('.element__image');
+      imagePopupPic.src = currentElement.getAttribute('src');
+      imagePopupTitle.textContent = currentElement.getAttribute('alt');
+      openPopup(imagePopup);
+    };
+  });
+  
+  imageCloseButton.addEventListener('click',() => closePopup(imagePopup));
+  
+  elementsList.addEventListener('click', function(event){
+  
+    let target = event.target;
+  
+    if(target.classList.contains('element__del-button')){
+      const currentElement = target.closest('.element');
+      currentElement.remove(); 
+    };
+  });
 };
 
 function changeLike (type) {
-type.classList.toggle('element__like-button_active');
+  type.classList.toggle('element__like-button_active');
 };
 
 function renderCards () {
-const list = initialCards.map(value => createCard(value.name, value.link));
-elementsList.prepend(...list);
+  const list = initialCards.map(value => createCard(value.name, value.link));
+  elementsList.prepend(...list);
+  setEventListeners ();
 };
 
 renderCards ();
@@ -112,84 +139,6 @@ function addNewCard (evt) {
   linkInput.value = 'Ссылка на картинку';
   closePopup(popupElementMesto);
 };
-
-//   const elementLikeButton = createElement.querySelector(selectors.elementLikeButton);
-
-//   function changeLike (type) {
-//     type.classList.toggle('element__like-button_active');
-//   };
-
-//   elementLikeButton.addEventListener('click', () => changeLike(elementLikeButton));
-
-//   function openImagePopup (type) {
-//     type.classList.add('image-popup_opened');
-
-//     imagePopupTitle.textContent = value.name;
-//     imagePopupPic.src = value.link;
-//     imagePopupPic.alt = value.name;
-//   };
-
-//   function closePopupImage (type) {
-//     type.classList.remove('image-popup_opened');
-//   };
-
-//   elementImage.addEventListener('click', () => openImagePopup(imagePopup));
-//   imageCloseButton.addEventListener('click', () => closePopupImage(imagePopup));
-//   console.log(value);
-// };
-
-
-
-// function createNewCard () {
-//   const createElement = template.cloneNode(true);
-//   const elementTitle = createElement.querySelector(selectors.elementTitle);
-//   const elementImage = createElement.querySelector(selectors.elementImage);
-
-//   elementTitle.textContent = mestoInput.value;
-//   elementImage.src = linkInput.value;
-
-//   elementsList.prepend(createElement);
-
-//   const elementLikeButton = createElement.querySelector(selectors.elementLikeButton);
-
-//   function changeLike (type) {
-//     type.classList.toggle('element__like-button_active');
-//     console.log('click');
-//   };
-
-//   elementLikeButton.addEventListener('click', () => changeLike(elementLikeButton));
-
-//   const imagePopup = document.querySelector(selectors.imagePopup);
-//   const imageCloseButton = document.querySelector(selectors.imageCloseButton);
-//   const imagePopupPic = document.querySelector(selectors.imagePopupPic);
-//   const imagePopupTitle = document.querySelector(selectors.imagePopupTitle);
-
-//   function openImagePopup (type) {
-//     type.classList.add('image-popup_opened');
-
-//     imagePopupTitle.textContent = mestoInput.value;
-//     imagePopupPic.src = linkInput.value;
-//   };
-
-//   function closePopupImage (type) {
-//     type.classList.remove('image-popup_opened');
-//   };
-
-//   elementImage.addEventListener('click', () => openImagePopup(imagePopup));
-//   imageCloseButton.addEventListener('click', () => closePopupImage(imagePopup));
-// };
-
-// function addNewCard (evt) {
-//   evt.preventDefault ();
-//   createNewCard ();
-//   closePopup(popupElementMesto);
-// }
-
-// function clearPopupMestoValue () {
-//   mestoInput.value = 'Название';
-//   linkInput.value = 'Ссылка на картинку';
-//   console.log('click');
-// };
 
 function setPopupEditValue () {
   nameInput.value = profileName.textContent.trim();
@@ -213,11 +162,11 @@ function closePopup (type) {
 
 function openPopup(type) {
   type.classList.add('image-popup_opened');
-}
+};
 
 profileEditButton.addEventListener('click', () => openPopup(popupElementEdit), setPopupEditValue());
 
-profileMestoButton.addEventListener('click', () => openPopup(popupElementMesto)); //setPopupMestoValue());
+profileMestoButton.addEventListener('click', () => openPopup(popupElementMesto));
 
 profileEditCloseButton.addEventListener('click', () => closePopup(popupElementEdit));
 
@@ -226,27 +175,3 @@ profileMestoCloseButton.addEventListener('click', () => closePopup(popupElementM
 formElementProfile.addEventListener('submit', handleFormSubmit);
 
 formElementMesto.addEventListener('submit', addNewCard);
-
-elementsList.addEventListener('click', function (event) {
-
-  let target = event.target;
-
-  if(target.classList.contains('element__image')) {
-    const currentElement = target.closest('.element__image');
-    imagePopupPic.src = currentElement.getAttribute('src');
-    imagePopupTitle.textContent = currentElement.getAttribute('alt');
-    openPopup(imagePopup);
-  }
-});
-
-imageCloseButton.addEventListener('click',() => closePopup(imagePopup));
-
-elementsList.addEventListener('click', function(event){
-
-  let target = event.target;
-
-  if(target.classList.contains('element__del-button')){
-    const currentElement = target.closest('.element');
-    currentElement.remove(); 
-  };
-});
