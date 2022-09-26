@@ -89,6 +89,8 @@ function createCard (name, link) {
   const elementLikeButton = elementForm.querySelector(selectors.elementLikeButton);
   elementLikeButton.addEventListener('click', () => changeLike(elementLikeButton));
 
+  setEventListeners ();
+
   return elementForm;
 };
 
@@ -126,17 +128,16 @@ function changeLike (type) {
 function renderCards () {
   const list = initialCards.map(value => createCard(value.name, value.link));
   elementsList.prepend(...list);
-  setEventListeners ();
 };
 
 renderCards ();
 
 function addNewCard (evt) {
   evt.preventDefault();
-  let card = createCard(mestoInput.value, linkInput.value);
+  const card = createCard(mestoInput.value, linkInput.value);
   elementsList.prepend(card);
-  mestoInput.value = 'Название';
-  linkInput.value = 'Ссылка на картинку';
+  mestoInput.value = '';
+  linkInput.value = '';
   closePopup(popupElementMesto);
 };
 
@@ -164,7 +165,10 @@ function openPopup(type) {
   type.classList.add('image-popup_opened');
 };
 
-profileEditButton.addEventListener('click', () => openPopup(popupElementEdit), setPopupEditValue());
+profileEditButton.addEventListener('click', () => {
+  openPopup(popupElementEdit);
+  setPopupEditValue();
+});
 
 profileMestoButton.addEventListener('click', () => openPopup(popupElementMesto));
 
