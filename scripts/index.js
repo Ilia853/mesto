@@ -85,18 +85,18 @@ function createCard (name, link) {
   elementImage.src = link;
   elementImage.alt = name;
 
-  setEventListeners(elementForm, elementImage);
+  setEventListeners(elementForm, elementImage);                 // установка слушателей карточки
 
   return elementForm;
 };
 
-function setEventListeners (element, elementImg) {
+function setEventListeners (element, elementImg) {               // функция устанвки слушателей карточки
 
   const elementLikeButton = element.querySelector(selectors.elementLikeButton);
-  elementLikeButton.addEventListener('click', () => changeLike(elementLikeButton));
+  elementLikeButton.addEventListener('click', () => changeLike(elementLikeButton)); // слушатель лайка
 
   elementImg.addEventListener('click', zoomImage);
-  function zoomImage (event) {
+  function zoomImage (event) {                                                //попап с картинкой
     const currentElement = event.target.closest('.element');
     const currentElementTitle = currentElement.querySelector('.element__title');
     const currentElementImage = currentElement.querySelector('.element__image');
@@ -107,7 +107,7 @@ function setEventListeners (element, elementImg) {
 
   const elementDelButton = element.querySelector(selectors.elementDelButton);
   elementDelButton.addEventListener('click', delImage);
-  function delImage (event) {
+  function delImage (event) {                                                 // удаление карточки
     const currentElement = event.target.closest('.element');
     currentElement.remove();
   };
