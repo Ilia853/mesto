@@ -68,7 +68,6 @@ const profileEditCloseButton = document.querySelector(selectors.profileEditClose
 const profileMestoCloseButton = document.querySelector(selectors.profileMestoCloseButton);
 const template = document.querySelector(selectors.template).content.children[0];
 const elementsList = document.querySelector(selectors.elementsList);
-// const elementDelButton = document.querySelector(selectors.elementDelButton);
 const imagePopup = document.querySelector(selectors.imagePopup);
 const imageCloseButton = document.querySelector(selectors.imageCloseButton);
 const imagePopupPic = document.querySelector(selectors.imagePopupPic);
@@ -86,56 +85,35 @@ function createCard (name, link) {
   elementImage.src = link;
   elementImage.alt = name;
 
-  const elementLikeButton = elementForm.querySelector(selectors.elementLikeButton);
+  setEventListeners(elementForm, elementImage);
+
+  return elementForm;
+};
+
+function setEventListeners (element, elementImg) {
+
+  const elementLikeButton = element.querySelector(selectors.elementLikeButton);
   elementLikeButton.addEventListener('click', () => changeLike(elementLikeButton));
 
-  elementImage.addEventListener('click', function (event) {
-    const currentElement = event.target.closest('.element'); //получаем родителя - лист с карточками
+  elementImg.addEventListener('click', zoomImage);
+  function zoomImage (event) {
+    const currentElement = event.target.closest('.element');
     const currentElementTitle = currentElement.querySelector('.element__title');
     const currentElementImage = currentElement.querySelector('.element__image');
     imagePopupPic.src = currentElementImage.src;
     imagePopupTitle.textContent = currentElementTitle.textContent;
     openPopup(imagePopup);
-    }
-  );
-  
-  const elementDelButton = elementForm.querySelector(selectors.elementDelButton);
-  elementDelButton.addEventListener('click', function (event) {
+  };
+
+  const elementDelButton = element.querySelector(selectors.elementDelButton);
+  elementDelButton.addEventListener('click', delImage);
+  function delImage (event) {
     const currentElement = event.target.closest('.element');
     currentElement.remove();
-  });
+  };
 
   imageCloseButton.addEventListener('click', () => closePopup(imagePopup));
-
-  return elementForm;
 };
-
-// function setEventListeners () {
-
-//   elementsList.addEventListener('click', function (event) {
-
-//     let target = event.target;
-  
-//     if(target.classList.contains('element__image')) {
-//       const currentElement = target.closest('.element__image');
-//       imagePopupPic.src = currentElement.getAttribute('src');
-//       imagePopupTitle.textContent = currentElement.getAttribute('alt');
-//       openPopup(imagePopup);
-//     };
-//   });
-  
-//   imageCloseButton.addEventListener('click',() => closePopup(imagePopup));
-  
-//   elementsList.addEventListener('click', function (event){
-  
-//     let target = event.target;
-  
-//     if(target.classList.contains('element__del-button')){
-//       const currentElement = target.closest('.element');
-//       currentElement.remove(); 
-//     };
-//   });
-// };
 
 function changeLike (type) {
   type.classList.toggle('element__like-button_active');
