@@ -50,6 +50,7 @@ imagePopup: '.image-popup',
 imageCloseButton: '.image-popup__close-button',
 imagePopupPic: '.image-popup__pic',
 imagePopupTitle: '.image-popup__title',
+cardElement: '.element',
 };
 
 const popupElementEdit = document.querySelector(selectors.popupElementEdit);
@@ -73,7 +74,7 @@ const imageCloseButton = document.querySelector(selectors.imageCloseButton);
 const imagePopupPic = document.querySelector(selectors.imagePopupPic);
 const imagePopupTitle = document.querySelector(selectors.imagePopupTitle);
 const elementImage = document.querySelector(selectors.elementImage);
-
+const cardElement = document.querySelector(selectors.cardElement);
 
 function createCard (name, link) {
 
@@ -85,34 +86,37 @@ function createCard (name, link) {
   elementImage.src = link;
   elementImage.alt = name;
 
-  setEventListeners(elementForm, elementImage);                 // установка слушателей карточки
+  setEventListeners(elementForm);
 
   return elementForm;
 };
 
-function setEventListeners (element, elementImg) {               // функция устанвки слушателей карточки
+function setEventListeners (element) {
 
   const elementLikeButton = element.querySelector(selectors.elementLikeButton);
-  elementLikeButton.addEventListener('click', () => changeLike(elementLikeButton)); // слушатель лайка
+  elementLikeButton.addEventListener('click', () => changeLike(elementLikeButton));
 
-  elementImg.addEventListener('click', zoomImage);
-  function zoomImage (event) {                                                //попап с картинкой
-    const currentElement = event.target.closest('.element');
-    const currentElementTitle = currentElement.querySelector('.element__title');
-    const currentElementImage = currentElement.querySelector('.element__image');
-    imagePopupPic.src = currentElementImage.src;
-    imagePopupTitle.textContent = currentElementTitle.textContent;
-    openPopup(imagePopup);
-  };
+  const elementImage = element.querySelector(selectors.elementImage);
+  elementImage.addEventListener('click', zoomImage);
 
   const elementDelButton = element.querySelector(selectors.elementDelButton);
   elementDelButton.addEventListener('click', delImage);
-  function delImage (event) {                                                 // удаление карточки
-    const currentElement = event.target.closest('.element');
-    currentElement.remove();
-  };
 
   imageCloseButton.addEventListener('click', () => closePopup(imagePopup));
+};
+
+function zoomImage (event) {
+  const currentElement = event.target.closest(selectors.cardElement);
+  const currentElementTitle = currentElement.querySelector(selectors.elementTitle);
+  const currentElementImage = currentElement.querySelector(selectors.elementImage);
+  imagePopupPic.src = currentElementImage.src;
+  imagePopupTitle.textContent = currentElementTitle.textContent;
+  openPopup(imagePopup);
+};
+
+function delImage (event) {
+  const currentElement = event.target.closest(selectors.cardElement);
+  currentElement.remove();
 };
 
 function changeLike (type) {
