@@ -111,6 +111,7 @@ function zoomImage (event) {
   const currentElementImage = currentElement.querySelector(selectors.elementImage);
   imagePopupPic.src = currentElementImage.src;
   imagePopupTitle.textContent = currentElementTitle.textContent;
+  imagePopupPic.alt = currentElementTitle.textContent;
   openPopup(imagePopup);
 };
 
