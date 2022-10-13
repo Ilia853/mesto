@@ -1,0 +1,6 @@
+.popup__form-button_disabled {
+    opacity: 0.2;
+    color: #000000;
+    background: #FFFFFF;
+    border-radius: 2px;
+};
