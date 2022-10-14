@@ -1,21 +1,16 @@
-.popup__form-button_disabled {
+.popup__form-button {
     max-width: 358px;
     font-weight: 400;
     font-size: 18px;
     line-height: 22px;
     text-align: center;
-    opacity: .2;
-    color: #000000;
-    background: #FFFFFF;
     border-radius: 2px;
     padding: 14px 0 18px;
-    border: 1px solid #000000;
-    cursor: auto;
     margin-bottom: 37px;
 };
 
 @media screen and (max-width: 550px) {
-    .popup__form-button_disabled {
+    .popup__form-button {
         max-width: 238px;
         font-weight: 400;
         font-size: 14px;
