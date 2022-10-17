@@ -51,6 +51,7 @@ imageCloseButton: '.image-popup__close-button',
 imagePopupPic: '.image-popup__pic',
 imagePopupTitle: '.image-popup__title',
 cardElement: '.element',
+popup: '.popup'
 };
 
 const popupElementEdit = document.querySelector(selectors.popupElementEdit);
@@ -178,3 +179,23 @@ profileMestoCloseButton.addEventListener('click', () => closePopup(popupElementM
 formElementProfile.addEventListener('submit', handleFormSubmit);
 
 formElementMesto.addEventListener('submit', addNewCard);
+
+function closeViaEsc (evt) {
+  const openedPopup = Array.from(document.querySelectorAll('.image-popup_opened'));
+
+  if (evt.keyCode == 27) {
+    openedPopup.forEach(closePopup);
+  };
+};
+
+document.addEventListener('keydown', closeViaEsc);
+
+function closeViaOverlay (evt) {
+
+  if (evt.target.classList.contains('popup')) {
+    const currentPopup = evt.target.closest('.popup');
+    closePopup(currentPopup);
+  };
+};
+
+document.addEventListener('click', closeViaOverlay);

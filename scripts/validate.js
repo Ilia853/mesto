@@ -2,7 +2,7 @@ const selectorsForValidate = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__form-button',
-  inactiveButtonClass: 'popup__form-button_disabled',
+  inactiveButtonClass: 'popup__form-button_type_disabled',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input_error-message'
 };
@@ -31,7 +31,7 @@ function checkInputValidity (formSelector, inputSelector) {
 
 function setEventListeners (formSelector) {
     const inputList = Array.from(formSelector.querySelectorAll('.popup__input'));
-    const buttonElement = formSelector.querySelector('.popup__form-button_abled');
+    const buttonElement = formSelector.querySelector('.popup__form-button_type_abled');
     toggleButtonState(inputList, buttonElement);
     inputList.forEach((inputSelector) => {
       inputSelector.addEventListener('input', function () {
@@ -59,12 +59,12 @@ const hasInvalidInput = (inputList) => {
   
   const toggleButtonState = (inputList, buttonElement) => {
     if (hasInvalidInput(inputList)) {
-      buttonElement.classList.remove('popup__form-button_abled');
-      buttonElement.classList.add('popup__form-button_disabled');
+      buttonElement.classList.remove('popup__form-button_type_abled');
+      buttonElement.classList.add('popup__form-button_type_disabled');
       buttonElement.setAttribute('disabled', 'disabled');
       } else {
-        buttonElement.classList.remove('popup__form-button_disabled');
-        buttonElement.classList.add('popup__form-button_abled');
+        buttonElement.classList.remove('popup__form-button_type_disabled');
+        buttonElement.classList.add('popup__form-button_type_abled');
         buttonElement.removeAttribute('disabled', 'disabled');
         };
   };
