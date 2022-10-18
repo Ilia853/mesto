@@ -159,10 +159,14 @@ function handleFormSubmit (evt) {
 
 function closePopup (type) {
   type.classList.remove('image-popup_opened');
+  document.removeEventListener('keydown', closeViaEsc);
+  document.removeEventListener('click', closeViaOverlay);
 };
 
 function openPopup(type) {
   type.classList.add('image-popup_opened');
+  document.addEventListener('keydown', closeViaEsc);
+  document.addEventListener('click', closeViaOverlay);
 };
 
 profileEditButton.addEventListener('click', () => {
@@ -170,7 +174,11 @@ profileEditButton.addEventListener('click', () => {
   setPopupEditValue();
 });
 
-profileMestoButton.addEventListener('click', () => openPopup(popupElementMesto));
+profileMestoButton.addEventListener('click', () => {
+  openPopup(popupElementMesto);
+  mestoInput.value = '';
+  linkInput.value = '';
+});
 
 profileEditCloseButton.addEventListener('click', () => closePopup(popupElementEdit));
 
@@ -182,20 +190,14 @@ formElementMesto.addEventListener('submit', addNewCard);
 
 function closeViaEsc (evt) {
   const openedPopup = Array.from(document.querySelectorAll('.image-popup_opened'));
-
   if (evt.keyCode == 27) {
     openedPopup.forEach(closePopup);
   };
 };
 
-document.addEventListener('keydown', closeViaEsc);
-
 function closeViaOverlay (evt) {
-
   if (evt.target.classList.contains('popup')) {
     const currentPopup = evt.target.closest('.popup');
     closePopup(currentPopup);
   };
 };
-
-document.addEventListener('click', closeViaOverlay);
