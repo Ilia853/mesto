@@ -4,7 +4,7 @@
     background: #FFFFFF;
     border: 1px solid #000000;
     cursor: auto;
-};
+}
 
 @media screen and (max-width: 550px) {
     .popup__form-button {
@@ -13,5 +13,5 @@
         font-size: 14px;
         line-height: 17px;
         margin-bottom: 23px;
-    };
-};
+    }
+}
