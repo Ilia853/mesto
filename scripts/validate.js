@@ -9,14 +9,14 @@ const selectorsForValidate = {
 
 function showInputError (formSelector, inputSelector, errorMessage) {
   const errorElement = formSelector.querySelector(`.${inputSelector.id}-error`);
-  inputSelector.classList.add('form__input_type_error');
+  inputSelector.classList.add('popup__input_type_error');
   errorElement.classList.add('popup__input_error-message');
   errorElement.textContent = errorMessage;
 };
 
 function hideInputError (formSelector, inputSelector) {
     const errorElement = formSelector.querySelector(`.${inputSelector.id}-error`);
-    inputSelector.classList.remove('form__input_type_error');
+    inputSelector.classList.remove('popup__input_type_error');
     errorElement.classList.remove('popup__input_error-message');
     errorElement.textContent = '';
   };
@@ -51,7 +51,7 @@ function enableValidation () {
       });
 };
 
-const hasInvalidInput = (inputList) => {
+function hasInvalidInput (inputList) {
     return inputList.some((inputSelector) => {
       return !inputSelector.validity.valid;
     });

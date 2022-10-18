@@ -5,3 +5,13 @@
     border: 1px solid #000000;
     cursor: auto;
 };
+
+@media screen and (max-width: 550px) {
+    .popup__form-button {
+        max-width: 238px;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        margin-bottom: 23px;
+    };
+};
