@@ -41,7 +41,7 @@ linkInput: '.popup__input_type_link',
 profileEditCloseButton: '.popup__close-button_type_edit',
 profileMestoCloseButton: '.popup__close-button_type_mesto',
 template: '#card-element',
-elementsList: '.elements__list',
+elementsContainer: '.elements__list',
 elementTitle: '.element__title',
 elementImage: '.element__image',
 elementLikeButton: '.element__like-button',
@@ -69,13 +69,14 @@ const linkInput = document.querySelector(selectors.linkInput);
 const profileEditCloseButton = document.querySelector(selectors.profileEditCloseButton);
 const profileMestoCloseButton = document.querySelector(selectors.profileMestoCloseButton);
 const template = document.querySelector(selectors.template).content.children[0];
-const elementsList = document.querySelector(selectors.elementsList);
+const elementsContainer = document.querySelector(selectors.elementsContainer);
 const imagePopup = document.querySelector(selectors.imagePopup);
 const imageCloseButton = document.querySelector(selectors.imageCloseButton);
 const imagePopupPic = document.querySelector(selectors.imagePopupPic);
 const imagePopupTitle = document.querySelector(selectors.imagePopupTitle);
 const elementImage = document.querySelector(selectors.elementImage);
 const cardElement = document.querySelector(selectors.cardElement);
+const popup = document.querySelector(selectors.popup);
 
 function createCard (name, link) {
 
@@ -103,7 +104,7 @@ function setEventListeners (element) {
   const elementDelButton = element.querySelector(selectors.elementDelButton);
   elementDelButton.addEventListener('click', delImage);
 
-  imageCloseButton.addEventListener('click', () => closePopup(imagePopup));
+  // imageCloseButton.addEventListener('click', () => closePopup(imagePopup));
 };
 
 function zoomImage (event) {
@@ -127,7 +128,7 @@ function changeLike (type) {
 
 function renderCards () {
   const list = initialCards.map(value => createCard(value.name, value.link));
-  elementsList.prepend(...list);
+  elementsContainer.prepend(...list);
 };
 
 renderCards ();
@@ -135,7 +136,7 @@ renderCards ();
 function addNewCard (evt) {
   evt.preventDefault();
   const card = createCard(mestoInput.value, linkInput.value);
-  elementsList.prepend(card);
+  elementsContainer.prepend(card);
   mestoInput.value = '';
   linkInput.value = '';
   closePopup(popupElementMesto);
@@ -160,13 +161,14 @@ function handleFormSubmit (evt) {
 function closePopup (type) {
   type.classList.remove('image-popup_opened');
   document.removeEventListener('keydown', closeViaEsc);
-  document.removeEventListener('click', closeViaOverlay);
+  type.removeEventListener('click', closeViaOverlay);
 };
 
 function openPopup(type) {
   type.classList.add('image-popup_opened');
   document.addEventListener('keydown', closeViaEsc);
-  document.addEventListener('click', closeViaOverlay);
+  type.addEventListener('click', closeViaOverlay);
+  toggleButtonState;
 };
 
 profileEditButton.addEventListener('click', () => {
@@ -184,20 +186,21 @@ profileEditCloseButton.addEventListener('click', () => closePopup(popupElementEd
 
 profileMestoCloseButton.addEventListener('click', () => closePopup(popupElementMesto));
 
+imageCloseButton.addEventListener('click', () => closePopup(imagePopup));
+
 formElementProfile.addEventListener('submit', handleFormSubmit);
 
 formElementMesto.addEventListener('submit', addNewCard);
 
 function closeViaEsc (evt) {
-  const openedPopup = Array.from(document.querySelectorAll('.image-popup_opened'));
-  if (evt.keyCode == 27) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelectorAll('.image-popup_opened');
     openedPopup.forEach(closePopup);
   };
 };
 
 function closeViaOverlay (evt) {
   if (evt.target.classList.contains('popup')) {
-    const currentPopup = evt.target.closest('.popup');
-    closePopup(currentPopup);
+    closePopup(evt.target);
   };
 };

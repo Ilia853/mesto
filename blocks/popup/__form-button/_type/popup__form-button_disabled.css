@@ -1,4 +1,4 @@
-.popup__form-button_type_disabled {
+.popup__form-button_disabled {
     opacity: .2;
     color: #000000;
     background: #FFFFFF;
@@ -6,7 +6,7 @@
     cursor: auto;
 }
 
-@media screen and (max-width: 550px) {
+/* @media screen and (max-width: 550px) {
     .popup__form-button {
         max-width: 238px;
         font-weight: 400;
@@ -14,4 +14,4 @@
         line-height: 17px;
         margin-bottom: 23px;
     }
-}
+} */
