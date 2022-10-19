@@ -1,4 +1,4 @@
-.popup__input_error-message {
+.popup__input-error-message {
     display: block;
     min-height: 30px;
     font-weight: 400;
@@ -7,6 +7,6 @@
     color: #FF0000;
 }
 
-.popup__input_error-message:last-of-type {
+.popup__input-error-message:last-of-type {
     margin-bottom: 18px;
 }
