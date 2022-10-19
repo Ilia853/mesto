@@ -1,14 +1,12 @@
 function showInputError (formSelector, inputSelector, errorMessage) {
   const errorElement = formSelector.querySelector(`.${inputSelector.id}-error`);
   inputSelector.classList.add(objectForValidate.inputErrorClass);
-  // errorElement.classList.add(objectForValidate.errorClass);
   errorElement.textContent = errorMessage;
 };
 
 function hideInputError (formSelector, inputSelector) {
     const errorElement = formSelector.querySelector(`.${inputSelector.id}-error`);
     inputSelector.classList.remove(objectForValidate.inputErrorClass);
-    // errorElement.classList.remove(objectForValidate.errorClass);
     errorElement.textContent = '';
   };
 
@@ -46,9 +44,9 @@ function hasInvalidInput (inputList) {
     return inputList.some((inputSelector) => {
       return !inputSelector.validity.valid;
     });
-  };
+};
   
-  const toggleButtonState = (inputList, buttonElement) => {
+const toggleButtonState = (inputList, buttonElement) => {
     if (hasInvalidInput(inputList)) {
       buttonElement.classList.add(objectForValidate.inactiveButtonClass);
       buttonElement.setAttribute('disabled', 'disabled');
@@ -56,9 +54,9 @@ function hasInvalidInput (inputList) {
         buttonElement.classList.remove(objectForValidate.inactiveButtonClass);
         buttonElement.removeAttribute('disabled', 'disabled');
         };
-  };
+};
   
-  enableValidation(objectForValidate = {
+enableValidation(objectForValidate = {
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__form-button',
