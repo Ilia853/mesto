@@ -28,7 +28,7 @@ const initialCards = [
 import { Card } from './Card.js'
 
 initialCards.forEach((item) => {
-    const card = new Card(item.name, item.link);
+    const card = new Card(item.name, item.link, '.card-element');
     const cardElement = card.createCard();
     const elementsList = document.querySelector('.elements__list');
 
