@@ -32,9 +32,9 @@ export class Card {
             this._delImage();
         })
 
-        // this._element.querySelector('.element__image').addEventListener('click', () => {
-        //     this._zoomImage();
-        // })
+        this._element.querySelector('.element__image').addEventListener('click', () => {
+            this._zoomImage();
+        })
     }
 
     _changeLike () {
@@ -46,9 +46,12 @@ export class Card {
         this._element.remove();
     }
 
-    // _zoomImage () {
-    //     this._element.querySelector('.image-popup').classList.add('image-popup_opened');
-    //     this._element.querySelector('.image-popup__pic').src = this._link;
-    //     this._element.querySelector('.image-popup__title').textContent = this._name;
-    // }
+    _zoomImage () {
+        this._image = document.querySelector('.image-popup');
+        
+        this._image.classList.add('image-popup_opened');
+
+        this._image.querySelector('.image-popup__pic').src = this._link;
+        this._image.querySelector('.image-popup__title').textContent = this._name;
+    }
 }

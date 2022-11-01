@@ -25,7 +25,7 @@ const initialCards = [
     },
 ];
 
-import { Card } from './Card.js'
+import {Card} from './Card.js'
 
 initialCards.forEach((item) => {
     const card = new Card(item.name, item.link, '.card-element');
