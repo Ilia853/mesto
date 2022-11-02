@@ -2,7 +2,7 @@ import {openPopup} from './index-new.js';
 
 export class Card {
 
-    constructor (name, link, templateSelector, closePopup) {
+    constructor (name, link, templateSelector) {
         this._name = name;
         this._link = link;
         this._templateSelector = templateSelector;
