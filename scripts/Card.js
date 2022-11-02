@@ -1,6 +1,8 @@
+import {openPopup} from './index-new.js';
+
 export class Card {
 
-    constructor (name, link, templateSelector) {
+    constructor (name, link, templateSelector, closePopup) {
         this._name = name;
         this._link = link;
         this._templateSelector = templateSelector;
@@ -49,7 +51,7 @@ export class Card {
     _zoomImage () {
         this._image = document.querySelector('.image-popup');
         
-        this._image.classList.add('image-popup_opened');
+        openPopup(this._image);
 
         this._image.querySelector('.image-popup__pic').src = this._link;
         this._image.querySelector('.image-popup__title').textContent = this._name;
