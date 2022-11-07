@@ -40,7 +40,7 @@ function enableValidation (settings) {
       });
 };
 
-function hasInvalidInput (inputList) {
+function hasInvalidInput () {
     return inputList.some((inputSelector) => {
       return !inputSelector.validity.valid;
     });
@@ -64,3 +64,4 @@ enableValidation({
     inputErrorClass: 'popup__input_type_error',
     errorClass: 'popup__input-error-message'
   });
+

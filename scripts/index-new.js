@@ -1,4 +1,5 @@
-import {Card} from './Card.js'
+import {Card} from './Card.js';
+import { FormFalidator } from './FormValidator.js';
 
 const initialCards = [
     {
@@ -84,13 +85,18 @@ function handleFormSubmit (evt) {
 
 export function openPopup(type) {
     type.classList.add('image-popup_opened');
+    document.addEventListener('keydown', closeViaEsc);
+    type.addEventListener('click', closeViaOverlay);
 }
 
 function closePopup(type) {
     type.classList.remove('image-popup_opened');
+    document.removeEventListener('keydown', closeViaEsc);
+    type.removeEventListener('click', closeViaOverlay);
 }
 
 profileEditButton.addEventListener('click', () => {
+    formValidatorProfile.enableValidation();
     openPopup(popupProfileEdit);
     setPopupEditValue();
 });
@@ -101,8 +107,37 @@ imagePopupCloseButton.addEventListener('click', () => closePopup(imagePopup));
 
 popupFormTypeEdit.addEventListener('submit', handleFormSubmit);
 
-mestoAddButton.addEventListener('click', () => openPopup(popupAddMesto));
+mestoAddButton.addEventListener('click', () => {
+    formValidatorMesto.enableValidation();
+    openPopup(popupAddMesto)});
 
 mestoAddCloseButton.addEventListener('click', () => closePopup(popupAddMesto));
 
 popupFormTypeMesto.addEventListener('submit', addNewCard);
+
+const settings = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__form-button',
+    inactiveButtonClass: 'popup__form-button_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__input-error-message'
+}
+
+const formValidatorMesto = new FormFalidator (popupFormTypeMesto, settings);
+
+const formValidatorProfile = new FormFalidator (popupFormTypeEdit, settings);
+
+function closeViaEsc (evt) {
+    if (evt.key === 'Escape') {
+      const openedPopup = document.querySelectorAll('.image-popup_opened');
+      openedPopup.forEach(closePopup);
+    };
+  };
+  
+function closeViaOverlay (evt) {
+    if (evt.target.classList.contains('popup')) {
+      closePopup(evt.target);
+    };
+  };
+  
