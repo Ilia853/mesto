@@ -1,4 +1,4 @@
-export class FormFalidator {
+export class FormValidator {
 
     constructor (form, settings) {
         this._formSelector = form;
@@ -12,7 +12,7 @@ export class FormFalidator {
     enableValidation() {
         this._inputList = Array.from(this._formSelector.querySelectorAll(this._inputSelector));
     
-            this._setEventListeners();
+        this._setEventListeners();
         
     }
 

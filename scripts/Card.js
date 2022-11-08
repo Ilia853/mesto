@@ -1,4 +1,5 @@
 import {openPopup} from './index.js';
+import { imagePopup, imagePopupPic, imagePopupTitle } from './index.js';
 
 export class Card {
 
@@ -9,7 +10,7 @@ export class Card {
     }
 
     _getCard () {
-        const card = document.querySelector(this._templateSelector).content.children[0].cloneNode(true);
+        const card = document.querySelector(this._templateSelector).content.querySelector('.element').cloneNode(true);
 
         return card;
     }
@@ -49,11 +50,9 @@ export class Card {
     }
 
     _zoomImage () {
-        this._image = document.querySelector('.image-popup');
-        
-        openPopup(this._image);
+        openPopup(imagePopup);
 
-        this._image.querySelector('.image-popup__pic').src = this._link;
-        this._image.querySelector('.image-popup__title').textContent = this._name;
+        imagePopupPic.src = this._link;
+        imagePopupTitle.textContent = this._name;
     }
 }
