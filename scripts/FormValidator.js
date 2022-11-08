@@ -12,11 +12,6 @@ export class FormFalidator {
     enableValidation() {
         this._inputList = Array.from(this._formSelector.querySelectorAll(this._inputSelector));
     
-        // this._formSelector.forEach(() => {
-        //     this._inputSelector.addEventListener('input', (evt) => {
-        //         evt.preventDefault();
-        //     });
-
             this._setEventListeners();
         
     }

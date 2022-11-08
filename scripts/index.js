@@ -1,228 +1,143 @@
+import {Card} from './Card.js';
+import {FormFalidator} from './FormValidator.js';
+
 const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
+    {
+      name: 'Архыз',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    },
+    {
+      name: 'Челябинская область',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    },
+    {
+      name: 'Иваново',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    },
+    {
+      name: 'Камчатка',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    },
+    {
+      name: 'Холмогорский район',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    },
+    {
+      name: 'Байкал',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    },
 ];
 
-const selectors = {
-popupElementEdit: '.popup_type_edit',
-popupElementMesto: '.popup_type_mesto',
-profileEditButton: '.profile__edit-button',
-profileMestoButton: '.profile__add-button',
-profileName: '.profile__title',
-profileJob: '.profile__subtitle',
-formElementProfile: '.popup__form_type_edit',
-formElementMesto: '.popup__form_type_mesto',
-nameInput: '.popup__input_type_name',
-jobInput: '.popup__input_type_job',
-mestoInput: '.popup__input_type_mesto',
-linkInput: '.popup__input_type_link',
-profileEditCloseButton: '.popup__close-button_type_edit',
-profileMestoCloseButton: '.popup__close-button_type_mesto',
-template: '#card-element',
-elementsContainer: '.elements__list',
-elementTitle: '.element__title',
-elementImage: '.element__image',
-elementLikeButton: '.element__like-button',
-elementDelButton: '.element__del-button',
-imagePopup: '.image-popup',
-imageCloseButton: '.image-popup__close-button',
-imagePopupPic: '.image-popup__pic',
-imagePopupTitle: '.image-popup__title',
-cardElement: '.element',
-popup: '.popup'
-};
+const profileEditButton = document.querySelector('.profile__edit-button');
+const popupProfileEdit = document.querySelector('.popup_type_edit');
+const popupCloseButton = document.querySelector('.popup__close-button_type_edit');
+const imagePopupCloseButton = document.querySelector('.image-popup__close-button');
+const imagePopup = document.querySelector('.image-popup');
+const nameInput = document.querySelector('.popup__input_type_name');
+const jobInput = document.querySelector('.popup__input_type_job');
+const profileName = document.querySelector('.profile__title');
+const profileJob = document.querySelector('.profile__subtitle');
+const popupFormTypeEdit = document.querySelector('.popup__form_type_edit');
+const popupFormTypeMesto = document.querySelector('.popup__form_type_mesto');
+const mestoAddButton = document.querySelector('.profile__add-button');
+const popupAddMesto = document.querySelector('.popup_type_mesto');
+const mestoAddCloseButton = document.querySelector('.popup__close-button_type_mesto');
+const mestoInput = document.querySelector('.popup__input_type_mesto');
+const linkInput = document.querySelector('.popup__input_type_link');
 
-const popupElementEdit = document.querySelector(selectors.popupElementEdit);
-const popupElementMesto = document.querySelector(selectors.popupElementMesto);
-const profileEditButton = document.querySelector(selectors.profileEditButton);
-const profileMestoButton = document.querySelector(selectors.profileMestoButton);
-const profileName = document.querySelector(selectors.profileName);
-const profileJob = document.querySelector(selectors.profileJob);
-const formElementProfile = document.querySelector(selectors.formElementProfile);
-const formElementMesto = document.querySelector(selectors.formElementMesto);
-const nameInput = document.querySelector(selectors.nameInput);
-const jobInput = document.querySelector(selectors.jobInput);
-const mestoInput = document.querySelector(selectors.mestoInput);
-const linkInput = document.querySelector(selectors.linkInput);
-const profileEditCloseButton = document.querySelector(selectors.profileEditCloseButton);
-const profileMestoCloseButton = document.querySelector(selectors.profileMestoCloseButton);
-const template = document.querySelector(selectors.template).content.children[0];
-const elementsContainer = document.querySelector(selectors.elementsContainer);
-const imagePopup = document.querySelector(selectors.imagePopup);
-const imageCloseButton = document.querySelector(selectors.imageCloseButton);
-const imagePopupPic = document.querySelector(selectors.imagePopupPic);
-const imagePopupTitle = document.querySelector(selectors.imagePopupTitle);
-const elementImage = document.querySelector(selectors.elementImage);
-const cardElement = document.querySelector(selectors.cardElement);
-const popup = document.querySelector(selectors.popup);
+function renderCard (name, link, templateSelector) {
+    const card = new Card(name, link, templateSelector);
+    const cardElement = card.createCard();
+    const elementsList = document.querySelector('.elements__list');
 
-function createCard (name, link) {
+    elementsList.prepend(cardElement);
+}
 
-  const elementForm = template.cloneNode(true);
-  const elementTitle = elementForm.querySelector(selectors.elementTitle);
-  const elementImage = elementForm.querySelector(selectors.elementImage);
-
-  elementTitle.textContent = name;
-  elementImage.src = link;
-  elementImage.alt = name;
-
-  setEventListeners(elementForm);
-
-  return elementForm;
-};
-
-function setEventListeners (element) {
-
-  const elementLikeButton = element.querySelector(selectors.elementLikeButton);
-  elementLikeButton.addEventListener('click', () => changeLike(elementLikeButton));
-
-  const elementImage = element.querySelector(selectors.elementImage);
-  elementImage.addEventListener('click', zoomImage);
-
-  const elementDelButton = element.querySelector(selectors.elementDelButton);
-  elementDelButton.addEventListener('click', delImage);
-};
-
-function zoomImage (event) {
-  const currentElement = event.target.closest(selectors.cardElement);
-  const currentElementTitle = currentElement.querySelector(selectors.elementTitle);
-  const currentElementImage = currentElement.querySelector(selectors.elementImage);
-  imagePopupPic.src = currentElementImage.src;
-  imagePopupTitle.textContent = currentElementTitle.textContent;
-  imagePopupPic.alt = currentElementTitle.textContent;
-  openPopup(imagePopup);
-};
-
-function delImage (event) {
-  const currentElement = event.target.closest(selectors.cardElement);
-  currentElement.remove();
-};
-
-function changeLike (type) {
-  type.classList.toggle('element__like-button_active');
-};
-
-function renderCards () {
-  const list = initialCards.map(value => createCard(value.name, value.link));
-  elementsContainer.prepend(...list);
-};
-
-renderCards ();
+initialCards.forEach((item) => {
+    renderCard(item.name, item.link, '.card-element');
+})
 
 function addNewCard (evt) {
-  evt.preventDefault();
-  const card = createCard(mestoInput.value, linkInput.value);
-  elementsContainer.prepend(card);
-  mestoInput.value = '';
-  linkInput.value = '';
-  closePopup(popupElementMesto);
-};
+    evt.preventDefault();
+    renderCard(mestoInput.value, linkInput.value, '.card-element')
+
+    mestoInput.value = '';
+    linkInput.value = '';
+
+    closePopup(popupAddMesto);
+}
 
 function setPopupEditValue () {
-  nameInput.value = profileName.textContent.trim();
-  jobInput.value = profileJob.textContent.trim();
-};
+    nameInput.value = profileName.textContent.trim();
+    jobInput.value = profileJob.textContent.trim();
+}
 
 function changePopupValue () {
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
-};
-
-function handleFormSubmit (evt) {
-  evt.preventDefault ();
-  changePopupValue ();
-  closePopup (popupElementEdit);
-};
-
-function closePopup (type) {
-  type.classList.remove('image-popup_opened');
-  document.removeEventListener('keydown', closeViaEsc);
-  type.removeEventListener('click', closeViaOverlay);
-};
-
-function openPopup(type) {
-  type.classList.add('image-popup_opened');
-  document.addEventListener('keydown', closeViaEsc);
-  type.addEventListener('click', closeViaOverlay);
+    profileName.textContent = nameInput.value;
+    profileJob.textContent = jobInput.value;
+}
   
-};
+function handleFormSubmit (evt) {
+    evt.preventDefault ();
+    changePopupValue ();
+    closePopup(popupProfileEdit);
+}
+
+export function openPopup(type) {
+    type.classList.add('image-popup_opened');
+    document.addEventListener('keydown', closeViaEsc);
+    type.addEventListener('click', closeViaOverlay);
+}
+
+function closePopup(type) {
+    type.classList.remove('image-popup_opened');
+    document.removeEventListener('keydown', closeViaEsc);
+    type.removeEventListener('click', closeViaOverlay);
+}
 
 profileEditButton.addEventListener('click', () => {
-  openPopup(popupElementEdit);
-  setPopupEditValue();
-  checkButton(popupElementEdit);
+    formValidatorProfile.enableValidation();
+    openPopup(popupProfileEdit);
+    setPopupEditValue();
 });
 
-profileMestoButton.addEventListener('click', () => {
-  openPopup(popupElementMesto);
-  mestoInput.value = '';
-  linkInput.value = '';
-  checkButton (popupElementMesto);
-});
+popupCloseButton.addEventListener('click', () => closePopup(popupProfileEdit));
 
-profileEditCloseButton.addEventListener('click', () => closePopup(popupElementEdit));
+imagePopupCloseButton.addEventListener('click', () => closePopup(imagePopup));
 
-profileMestoCloseButton.addEventListener('click', () => closePopup(popupElementMesto));
+popupFormTypeEdit.addEventListener('submit', handleFormSubmit);
 
-imageCloseButton.addEventListener('click', () => closePopup(imagePopup));
+mestoAddButton.addEventListener('click', () => {
+    formValidatorMesto.enableValidation();
+    openPopup(popupAddMesto)});
 
-formElementProfile.addEventListener('submit', handleFormSubmit);
+mestoAddCloseButton.addEventListener('click', () => closePopup(popupAddMesto));
 
-formElementMesto.addEventListener('submit', addNewCard);
+popupFormTypeMesto.addEventListener('submit', addNewCard);
+
+const settings = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__form-button',
+    inactiveButtonClass: 'popup__form-button_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__input-error-message'
+}
+
+const formValidatorMesto = new FormFalidator (popupFormTypeMesto, settings);
+
+const formValidatorProfile = new FormFalidator (popupFormTypeEdit, settings);
 
 function closeViaEsc (evt) {
-  if (evt.key === 'Escape') {
-    const openedPopup = document.querySelectorAll('.image-popup_opened');
-    openedPopup.forEach(closePopup);
+    if (evt.key === 'Escape') {
+      const openedPopup = document.querySelectorAll('.image-popup_opened');
+      openedPopup.forEach(closePopup);
+    };
   };
-};
-
+  
 function closeViaOverlay (evt) {
-  if (evt.target.classList.contains('popup')) {
-    closePopup(evt.target);
+    if (evt.target.classList.contains('popup')) {
+      closePopup(evt.target);
+    };
   };
-};
-
-function checkButton (popupForm) {
-const inputList = Array.from(popupForm.querySelectorAll('.popup__input'));
-const buttonElement = popupForm.querySelector('.popup__form-button');
-toggleButton (inputList, buttonElement);
-};
-
-function toggleButton (inputList, buttonElement) {
-  if (isValid(inputList)) {
-    buttonElement.classList.add('popup__form-button_disabled');
-    buttonElement.setAttribute('disabled', 'disabled');
-    } else {
-      buttonElement.classList.remove('popup__form-button_disabled');
-      buttonElement.removeAttribute('disabled', 'disabled');
-      };
-};
-
-function isValid (inputList) {
-  return inputList.some((inputSelector) => {
-    return !inputSelector.validity.valid;
-  });
-};
+  

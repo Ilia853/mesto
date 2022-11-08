@@ -1,4 +1,4 @@
-import {openPopup} from './index-new.js';
+import {openPopup} from './index.js';
 
 export class Card {
 
