@@ -66,7 +66,6 @@ export function openPopup(type) {
     type.classList.add('image-popup_opened');
     document.addEventListener('keydown', closeViaEsc);
     type.addEventListener('click', closeViaOverlay);
-    formValidatorMesto.enableValidation();
 }
 
 function closePopup(type) {
@@ -96,6 +95,8 @@ popupFormTypeMesto.addEventListener('submit', addNewCard);
 
 
 const formValidatorMesto = new FormValidator (popupFormTypeMesto, settings);
+
+formValidatorMesto.enableValidation();
 
 const formValidatorProfile = new FormValidator (popupFormTypeEdit, settings);
 
