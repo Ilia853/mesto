@@ -44,6 +44,8 @@ function addNewCard (evt) {
     popupFormTypeMesto.reset();
 
     closePopup(popupAddMesto);
+
+    formValidatorMesto.disableButton();
 }
 
 function setPopupEditValue () {
@@ -101,7 +103,6 @@ formValidatorMesto.enableValidation();
 const formValidatorProfile = new FormValidator (popupFormTypeEdit, settings);
 
 formValidatorProfile.enableValidation();
-
 
 function closeViaEsc (evt) {
     if (evt.key === 'Escape') {

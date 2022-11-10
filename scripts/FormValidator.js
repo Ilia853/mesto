@@ -1,5 +1,3 @@
-import { openPopup, popupAddMesto } from "./index.js";
-
 export class FormValidator {
 
     constructor (form, settings) {
@@ -62,4 +60,9 @@ export class FormValidator {
             this._buttonElement.removeAttribute('disabled', 'disabled');
         };
     };
+
+    disableButton() {
+        this._buttonElement.classList.add(this._inactiveButtonClass);
+        this._buttonElement.setAttribute('disabled', 'disabled');
+    }
 }
