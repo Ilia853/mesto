@@ -16,7 +16,7 @@ const profileJob = document.querySelector('.profile__subtitle');
 const popupFormTypeEdit = document.querySelector('.popup__form_type_edit');
 const popupFormTypeMesto = document.querySelector('.popup__form_type_mesto');
 const mestoAddButton = document.querySelector('.profile__add-button');
-const popupAddMesto = document.querySelector('.popup_type_mesto');
+export const popupAddMesto = document.querySelector('.popup_type_mesto');
 const mestoAddCloseButton = document.querySelector('.popup__close-button_type_mesto');
 const mestoInput = document.querySelector('.popup__input_type_mesto');
 const linkInput = document.querySelector('.popup__input_type_link');
@@ -66,6 +66,7 @@ export function openPopup(type) {
     type.classList.add('image-popup_opened');
     document.addEventListener('keydown', closeViaEsc);
     type.addEventListener('click', closeViaOverlay);
+    formValidatorMesto.enableValidation();
 }
 
 function closePopup(type) {
@@ -95,8 +96,6 @@ popupFormTypeMesto.addEventListener('submit', addNewCard);
 
 
 const formValidatorMesto = new FormValidator (popupFormTypeMesto, settings);
-
-formValidatorMesto.enableValidation();
 
 const formValidatorProfile = new FormValidator (popupFormTypeEdit, settings);
 
