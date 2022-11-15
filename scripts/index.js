@@ -2,6 +2,7 @@ import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
 import { initialCards } from './cards.js';
 import { settings } from './settingsForValidation.js';
+import Section from './Section.js'
 
 
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -24,95 +25,105 @@ const elementsList = document.querySelector('.elements__list');
 export const imagePopupPic = imagePopup.querySelector('.image-popup__pic');
 export const imagePopupTitle =imagePopup.querySelector('.image-popup__title');
 
-function renderCard (name, link, templateSelector) {
-    const card = new Card(name, link, templateSelector);
-    const cardElement = card.createCard();
+const cardList = new Section ({
+    items: initialCards,
+    renderer: (item) => {
+        const card = new Card(item.name, item.link, '.card-element');
+        const cardElement = card.createCard();
+        
+    }},
+    '.card-element'
+)
+
+// function renderCard (name, link, templateSelector) {
+//     const card = new Card(name, link, templateSelector);
+//     const cardElement = card.createCard();
     
-    return cardElement;
-}
+//     return cardElement;
+// }
 
-initialCards.forEach((item) => {
-    const cardList = renderCard(item.name, item.link, '.card-element');
-    elementsList.prepend(cardList);
-})
+// initialCards.forEach((item) => {
+//     const cardList = renderCard(item.name, item.link, '.card-element');
+//     elementsList.prepend(cardList);
+// })
 
-function addNewCard (evt) {
-    evt.preventDefault();
-    const card = renderCard(mestoInput.value, linkInput.value, '.card-element');
-    elementsList.prepend(card);
+// function addNewCard (evt) {
+//     evt.preventDefault();
+//     const card = renderCard(mestoInput.value, linkInput.value, '.card-element');
+//     elementsList.prepend(card);
 
-    popupFormTypeMesto.reset();
+//     popupFormTypeMesto.reset();
 
-    closePopup(popupAddMesto);
+//     closePopup(popupAddMesto);
 
-    formValidatorMesto.disableButton();
-}
+//     formValidatorMesto.disableButton();
+// }
 
-function setPopupEditValue () {
-    nameInput.value = profileName.textContent.trim();
-    jobInput.value = profileJob.textContent.trim();
-}
+// function setPopupEditValue () {
+//     nameInput.value = profileName.textContent.trim();
+//     jobInput.value = profileJob.textContent.trim();
+// }
 
-function changePopupValue () {
-    profileName.textContent = nameInput.value;
-    profileJob.textContent = jobInput.value;
-}
+// function changePopupValue () {
+//     profileName.textContent = nameInput.value;
+//     profileJob.textContent = jobInput.value;
+// }
   
-function handleFormSubmit (evt) {
-    evt.preventDefault ();
-    changePopupValue ();
-    closePopup(popupProfileEdit);
-}
+// function handleFormSubmit (evt) {
+//     evt.preventDefault ();
+//     changePopupValue ();
+//     closePopup(popupProfileEdit);
+// }
 
-export function openPopup(type) {
-    type.classList.add('image-popup_opened');
-    document.addEventListener('keydown', closeViaEsc);
-    type.addEventListener('click', closeViaOverlay);
-}
+// export function openPopup(type) {
+//     type.classList.add('image-popup_opened');
+//     document.addEventListener('keydown', closeViaEsc);
+//     type.addEventListener('click', closeViaOverlay);
+// }
 
-function closePopup(type) {
-    type.classList.remove('image-popup_opened');
-    document.removeEventListener('keydown', closeViaEsc);
-    type.removeEventListener('click', closeViaOverlay);
-}
+// function closePopup(type) {
+//     type.classList.remove('image-popup_opened');
+//     document.removeEventListener('keydown', closeViaEsc);
+//     type.removeEventListener('click', closeViaOverlay);
+// }
 
-profileEditButton.addEventListener('click', () => {
-    openPopup(popupProfileEdit);
-    setPopupEditValue();
-});
+// profileEditButton.addEventListener('click', () => {
+//     openPopup(popupProfileEdit);
+//     setPopupEditValue();
+// });
 
-mestoAddButton.addEventListener('click', () => {
-    openPopup(popupAddMesto)
-});
+// mestoAddButton.addEventListener('click', () => {
+//     openPopup(popupAddMesto)
+// });
 
-popupCloseButton.addEventListener('click', () => closePopup(popupProfileEdit));
+// popupCloseButton.addEventListener('click', () => closePopup(popupProfileEdit));
 
-imagePopupCloseButton.addEventListener('click', () => closePopup(imagePopup));
+// imagePopupCloseButton.addEventListener('click', () => closePopup(imagePopup));
 
-popupFormTypeEdit.addEventListener('submit', handleFormSubmit);
+// popupFormTypeEdit.addEventListener('submit', handleFormSubmit);
 
-mestoAddCloseButton.addEventListener('click', () => closePopup(popupAddMesto));
+// mestoAddCloseButton.addEventListener('click', () => closePopup(popupAddMesto));
 
-popupFormTypeMesto.addEventListener('submit', addNewCard);
+// popupFormTypeMesto.addEventListener('submit', addNewCard);
 
 
-const formValidatorMesto = new FormValidator (popupFormTypeMesto, settings);
+// const formValidatorMesto = new FormValidator (popupFormTypeMesto, settings);
 
-formValidatorMesto.enableValidation();
+// formValidatorMesto.enableValidation();
 
-const formValidatorProfile = new FormValidator (popupFormTypeEdit, settings);
+// const formValidatorProfile = new FormValidator (popupFormTypeEdit, settings);
 
-formValidatorProfile.enableValidation();
+// formValidatorProfile.enableValidation();
 
-function closeViaEsc (evt) {
-    if (evt.key === 'Escape') {
-      const openedPopup = document.querySelectorAll('.image-popup_opened');
-      openedPopup.forEach(closePopup);
-    };
-};
+// function closeViaEsc (evt) {
+//     if (evt.key === 'Escape') {
+//       const openedPopup = document.querySelectorAll('.image-popup_opened');
+//       openedPopup.forEach(closePopup);
+//     };
+// };
 
-function closeViaOverlay (evt) {
-    if (evt.target.classList.contains('popup')) {
-      closePopup(evt.target);
-    };
-};
+// function closeViaOverlay (evt) {
+//     if (evt.target.classList.contains('popup')) {
+//       closePopup(evt.target);
+//     };
+// };
