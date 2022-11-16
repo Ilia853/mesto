@@ -29,11 +29,17 @@ const cardList = new Section ({
     items: initialCards,
     renderer: (item) => {
         const card = new Card(item.name, item.link, '.card-element');
+        //console.log(card);
         const cardElement = card.createCard();
-        
+        //console.log(cardElement);
+
+        cardList.addItem(cardElement);
+        //console.log(cardList);
     }},
-    '.card-element'
+    '.elements__list'
 )
+console.log(cardList);
+cardList.renderItems();
 
 // function renderCard (name, link, templateSelector) {
 //     const card = new Card(name, link, templateSelector);
