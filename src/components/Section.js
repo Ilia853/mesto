@@ -1,4 +1,4 @@
-export default class Section { // отвечает за отрисовку элементов на странице, нет своей разметки
+export class Section { // отвечает за отрисовку элементов на странице, нет своей разметки
                                // он получает разметку через функцию-колбэк и вставляет её в контейнер
     constructor ({ items, renderer }, containerSelector) {
         this._initialArray = items;

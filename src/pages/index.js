@@ -1,8 +1,9 @@
-import { Card } from './Card.js';
-import { FormValidator } from './FormValidator.js';
-import { initialCards } from './cards.js';
-import { settings } from './settingsForValidation.js';
-import Section from './Section.js'
+import { Card } from '../components/Card.js';
+import { FormValidator } from '../components/FormValidator.js';
+import { initialCards } from '../components/cards.js';
+import { settings } from '../components/settingsForValidation.js';
+import { Section } from '../components/Section.js'
+import { Popup } from '../components/Popup.js';
 
 
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -29,17 +30,34 @@ const cardList = new Section ({
     items: initialCards,
     renderer: (item) => {
         const card = new Card(item.name, item.link, '.card-element');
-        //console.log(card);
         const cardElement = card.createCard();
-        //console.log(cardElement);
 
         cardList.addItem(cardElement);
-        //console.log(cardList);
     }},
     '.elements__list'
 )
-console.log(cardList);
+
 cardList.renderItems();
+
+const openProfilePopup = new Popup (popupProfileEdit);
+
+profileEditButton.addEventListener('click', () => {
+    openProfilePopup.open();
+})
+
+popupCloseButton.addEventListener('click', () => {
+    openProfilePopup.close();
+})
+
+const openAddMestoPopup = new Popup (popupAddMesto);
+
+mestoAddButton.addEventListener('click', () => {
+    openAddMestoPopup.open();
+})
+
+mestoAddCloseButton.addEventListener('click', () => {
+    openAddMestoPopup.close();
+})
 
 // function renderCard (name, link, templateSelector) {
 //     const card = new Card(name, link, templateSelector);
