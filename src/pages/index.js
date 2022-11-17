@@ -4,6 +4,7 @@ import { initialCards } from '../components/cards.js';
 import { settings } from '../components/settingsForValidation.js';
 import { Section } from '../components/Section.js'
 import { Popup } from '../components/Popup.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
 
 
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -58,6 +59,10 @@ mestoAddButton.addEventListener('click', () => {
 mestoAddCloseButton.addEventListener('click', () => {
     openAddMestoPopup.close();
 })
+
+const popupWithImage = new PopupWithImage (imagePopup);
+console.log(popupWithImage);
+
 
 // function renderCard (name, link, templateSelector) {
 //     const card = new Card(name, link, templateSelector);

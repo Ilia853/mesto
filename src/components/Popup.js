@@ -4,25 +4,31 @@ export class Popup {
         this._popupSelector = popupSelector;
     }
 
-    open () { // открытие попапа
+    open () {
         this._popupSelector.classList.add('image-popup_opened');
+        document.addEventListener('keydown', this._handleEscClose.bind(this));
+        this._popupSelector.addEventListener('click', this._closeViaOverlay.bind(this));
     }
 
-    close () { // закрытие попапа
-        //this._popupSelector.classList.remove('image-popup_opened');
-        this.setEventListeners();
+    close () {
+        this._popupSelector.classList.remove('image-popup_opened');
+        document.removeEventListener('keydown', this._handleEscClose.bind(this));
+        this._popupSelector.removeEventListener('click', this._closeViaOverlay.bind(this));
     }
 
-    _handleEscClose (event) { // содержит логику закрытия попапа клавишей Esc
-        if (event.key === 'Escape') {
+    _handleEscClose (evt) {
+        if (evt.key === 'Escape') {
             this.close();
-            console.log('ok');
+        }
+    }
+
+    _closeViaOverlay (evt) {
+        if (evt.target.classList.contains('popup')) {
+            this.close();
         }
     }
 
     setEventListeners () { // добавляет слушатель клика иконке закрытия попапа, и закрытие через overlay
-        document.querySelectorAll('.popup__close-button').addEventListener('click', () => {
-            this._popupSelector.classList.remove('image-popup_opened');
-        })
+        this.close();
     }
 }
