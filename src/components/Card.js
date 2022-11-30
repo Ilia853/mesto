@@ -2,10 +2,11 @@
 
 export class Card {
 
-    constructor (name, link, templateSelector) {
+    constructor (name, link, templateSelector, {handleCardClick}) {
         this._name = name;
         this._link = link;
         this._templateSelector = templateSelector;
+        this._handleCardClick = handleCardClick;
     }
 
     _getCard () {
@@ -34,9 +35,9 @@ export class Card {
             this._delImage();
         })
 
-        // this._element.querySelector('.element__image').addEventListener('click', () => {
-        //     this._zoomImage();
-        // })
+        this._element.querySelector('.element__image').addEventListener('click', () => {
+            this._handleCardClick();
+        })
     }
 
     _changeLike () {

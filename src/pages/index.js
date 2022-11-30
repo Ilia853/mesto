@@ -5,6 +5,7 @@ import { settings } from '../components/settingsForValidation.js';
 import { Section } from '../components/Section.js'
 import { Popup } from '../components/Popup.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
 
 
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -27,10 +28,15 @@ const elementsList = document.querySelector('.elements__list');
 export const imagePopupPic = imagePopup.querySelector('.image-popup__pic');
 export const imagePopupTitle =imagePopup.querySelector('.image-popup__title');
 
+
 const cardList = new Section ({
     items: initialCards,
     renderer: (item) => {
-        const card = new Card(item.name, item.link, '.card-element');
+        const card = new Card(item.name, item.link, '.card-element', {
+            handleCardClick: () => {
+                popupWithImage.zoomImage(item.name, item.link);
+            }
+        });
         const cardElement = card.createCard();
 
         cardList.addItem(cardElement);
@@ -38,30 +44,41 @@ const cardList = new Section ({
     '.elements__list'
 )
 
+const newCard = new PopupWithForm ('.elements__list', {
+    handleFormSubmit: (item) => {
+
+    }
+    }
+)
+
 cardList.renderItems();
 
-const openProfilePopup = new Popup (popupProfileEdit);
+const popupWithImage = new PopupWithImage (imagePopup);
 
+const openProfilePopup = new Popup (popupProfileEdit);
 profileEditButton.addEventListener('click', () => {
     openProfilePopup.open();
 })
-
 popupCloseButton.addEventListener('click', () => {
     openProfilePopup.close();
 })
 
 const openAddMestoPopup = new Popup (popupAddMesto);
-
 mestoAddButton.addEventListener('click', () => {
     openAddMestoPopup.open();
 })
-
 mestoAddCloseButton.addEventListener('click', () => {
     openAddMestoPopup.close();
 })
 
-const popupWithImage = new PopupWithImage (imagePopup);
-console.log(popupWithImage);
+const closeImagePopup = new Popup (imagePopup);
+imagePopupCloseButton.addEventListener('click', () => {
+    closeImagePopup.close();
+})
+
+
+
+
 
 
 // function renderCard (name, link, templateSelector) {

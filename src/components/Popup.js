@@ -4,16 +4,19 @@ export class Popup {
         this._popupSelector = popupSelector;
     }
 
+    _handleEscCloseRef = this._handleEscClose.bind(this);
+    _closeViaOverlayRef = this._closeViaOverlay.bind(this);
+
     open () {
         this._popupSelector.classList.add('image-popup_opened');
-        document.addEventListener('keydown', this._handleEscClose.bind(this));
-        this._popupSelector.addEventListener('click', this._closeViaOverlay.bind(this));
+        document.addEventListener('keydown', this._handleEscCloseRef);
+        this._popupSelector.addEventListener('click', this._closeViaOverlayRef);
     }
 
     close () {
         this._popupSelector.classList.remove('image-popup_opened');
-        document.removeEventListener('keydown', this._handleEscClose.bind(this));
-        this._popupSelector.removeEventListener('click', this._closeViaOverlay.bind(this));
+        document.removeEventListener('keydown', this._handleEscCloseRef);
+        this._popupSelector.removeEventListener('click', this._closeViaOverlayRef);
     }
 
     _handleEscClose (evt) {
