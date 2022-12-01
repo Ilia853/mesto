@@ -28,30 +28,39 @@ const elementsList = document.querySelector('.elements__list');
 export const imagePopupPic = imagePopup.querySelector('.image-popup__pic');
 export const imagePopupTitle =imagePopup.querySelector('.image-popup__title');
 
+function renderCard (item) {
+    const card = new Card(item.name, item.link, '.card-element', {
+        handleCardClick: () => {
+            popupWithImage.zoomImage(item.name, item.link);
+        }
+    });
+    const cardElement = card.createCard();
+
+    return cardElement;
+}
 
 const cardList = new Section ({
     items: initialCards,
     renderer: (item) => {
-        const card = new Card(item.name, item.link, '.card-element', {
-            handleCardClick: () => {
-                popupWithImage.zoomImage(item.name, item.link);
-            }
-        });
-        const cardElement = card.createCard();
+        const cardElement = renderCard(item);
 
         cardList.addItem(cardElement);
     }},
     '.elements__list'
 )
 
-const newCard = new PopupWithForm ('.elements__list', {
-    handleFormSubmit: (item) => {
-
-    }
-    }
-)
-
 cardList.renderItems();
+
+const newCard = new PopupWithForm ({
+    popupSelector: '.elements__list', 
+    handleFormSubmit: (item) => {
+        const cardElementNew = renderCard(item);
+
+        cardList.addItem(cardElementNew);
+    }
+})
+
+newCard.setEventListeners();
 
 const popupWithImage = new PopupWithImage (imagePopup);
 
