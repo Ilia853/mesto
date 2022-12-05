@@ -1,7 +1,7 @@
 export class Popup {
 
     constructor (popupSelector) {
-        this._popupSelector = popupSelector;
+        this._popupSelector = document.querySelector(popupSelector);
     }
 
     _handleEscCloseRef = this._handleEscClose.bind(this);
@@ -15,8 +15,6 @@ export class Popup {
 
     close () {
         this._popupSelector.classList.remove('image-popup_opened');
-        document.removeEventListener('keydown', this._handleEscCloseRef);
-        this._popupSelector.removeEventListener('click', this._closeViaOverlayRef);
     }
 
     _handleEscClose (evt) {
@@ -31,7 +29,16 @@ export class Popup {
         }
     }
 
-    setEventListeners () { // добавляет слушатель клика иконке закрытия попапа, и закрытие через overlay
-        this.close();
+    setEventListeners () {
+        const closeButton = document.querySelector('.popup__close-button');
+        closeButton.addEventListener('click', this.close());
+
+        document.removeEventListener('keydown', () => {
+            this._handleEscCloseRef;
+        });
+        
+        this._popupSelector.removeEventListener('click', () => {
+            this._closeViaOverlayRef;
+        });
     }
 }

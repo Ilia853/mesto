@@ -43,7 +43,6 @@ const cardList = new Section ({
     items: initialCards,
     renderer: (item) => {
         const cardElement = renderCard(item);
-
         cardList.addItem(cardElement);
     }},
     '.elements__list'
@@ -51,38 +50,37 @@ const cardList = new Section ({
 
 cardList.renderItems();
 
-const newCard = new PopupWithForm ({
-    popupSelector: '.elements__list', 
+const newCard = new PopupWithForm (
+    '.popup_type_mesto', {
     handleFormSubmit: (item) => {
         const cardElementNew = renderCard(item);
-
         cardList.addItem(cardElementNew);
     }
 })
 
 newCard.setEventListeners();
 
-const popupWithImage = new PopupWithImage (imagePopup);
+const popupWithImage = new PopupWithImage ('.image-popup');
 
-const openProfilePopup = new Popup (popupProfileEdit);
+const openProfilePopup = new Popup ('.popup_type_edit');
 profileEditButton.addEventListener('click', () => {
     openProfilePopup.open();
 })
 popupCloseButton.addEventListener('click', () => {
-    openProfilePopup.close();
+    openProfilePopup.setEventListeners();
 })
 
-const openAddMestoPopup = new Popup (popupAddMesto);
+const openAddMestoPopup = new Popup ('.popup_type_mesto');
 mestoAddButton.addEventListener('click', () => {
     openAddMestoPopup.open();
 })
 mestoAddCloseButton.addEventListener('click', () => {
-    openAddMestoPopup.close();
+    openAddMestoPopup.setEventListeners();
 })
 
-const closeImagePopup = new Popup (imagePopup);
+const closeImagePopup = new Popup ('.image-popup');
 imagePopupCloseButton.addEventListener('click', () => {
-    closeImagePopup.close();
+    closeImagePopup.setEventListeners();
 })
 
 
