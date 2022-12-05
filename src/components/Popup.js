@@ -2,10 +2,11 @@ export class Popup {
 
     constructor (popupSelector) {
         this._popupSelector = document.querySelector(popupSelector);
+        this._handleEscCloseRef = this._handleEscClose.bind(this);
+        this._closeViaOverlayRef = this._closeViaOverlay.bind(this);
     }
 
-    _handleEscCloseRef = this._handleEscClose.bind(this);
-    _closeViaOverlayRef = this._closeViaOverlay.bind(this);
+    
 
     open () {
         this._popupSelector.classList.add('image-popup_opened');

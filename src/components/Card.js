@@ -2,9 +2,8 @@
 
 export class Card {
 
-    constructor (name, link, templateSelector, {handleCardClick}) {
-        this._name = name;
-        this._link = link;
+    constructor ({data, handleCardClick}, templateSelector) {
+        this._data = data;
         this._templateSelector = templateSelector;
         this._handleCardClick = handleCardClick;
     }
@@ -20,8 +19,8 @@ export class Card {
 
         this._setEventLiteners();
 
-        this._element.querySelector('.element__image').src = this._link;
-        this._element.querySelector('.element__title').textContent = this._name;
+        this._element.querySelector('.element__image').src = this._data.link;
+        this._element.querySelector('.element__title').textContent = this._data.name;
 
         return this._element;
     }

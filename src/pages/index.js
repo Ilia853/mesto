@@ -29,11 +29,13 @@ export const imagePopupPic = imagePopup.querySelector('.image-popup__pic');
 export const imagePopupTitle =imagePopup.querySelector('.image-popup__title');
 
 function renderCard (item) {
-    const card = new Card(item.name, item.link, '.card-element', {
+    const card = new Card({
+        data: item,
         handleCardClick: () => {
             popupWithImage.zoomImage(item.name, item.link);
         }
-    });
+    },
+    '.card-element');
     const cardElement = card.createCard();
 
     return cardElement;
@@ -50,8 +52,8 @@ const cardList = new Section ({
 
 cardList.renderItems();
 
-const newCard = new PopupWithForm (
-    '.popup_type_mesto', {
+const newCard = new PopupWithForm ({
+    popupSelector: '.popup_type_mesto', 
     handleFormSubmit: (item) => {
         const cardElementNew = renderCard(item);
         cardList.addItem(cardElementNew);
