@@ -1,5 +1,3 @@
-// import { openPopup, imagePopup, imagePopupPic, imagePopupTitle } from './index.js';
-
 export class Card {
 
     constructor ({data, handleCardClick}, templateSelector) {
@@ -47,11 +45,4 @@ export class Card {
         this._element.querySelector('.element');
         this._element.remove();
     }
-
-    // _zoomImage () {
-    //     openPopup(imagePopup);
-
-    //     imagePopupPic.src = this._link;
-    //     imagePopupTitle.textContent = this._name;
-    // }
 }

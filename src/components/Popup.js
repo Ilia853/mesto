@@ -6,8 +6,6 @@ export class Popup {
         this._closeViaOverlayRef = this._closeViaOverlay.bind(this);
     }
 
-    
-
     open () {
         this._popupSelector.classList.add('image-popup_opened');
         document.addEventListener('keydown', this._handleEscCloseRef);

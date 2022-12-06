@@ -9,7 +9,7 @@ export class PopupWithImage extends Popup {
     }
 
     zoomImage (title, image) {
-        
+    
         this._popupTitle.textContent = title;
         this._popupImage.src = image;
         super.open();
