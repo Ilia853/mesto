@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./src/pages/index.css">
     <title>Место</title>
 </head>
 <body class="page">
@@ -14,12 +13,12 @@
     <main>
         <section class="profile">
             <div class="profile__box">
-                <img class="profile__image" src="./src/images/profile__image.jpg" alt="Фото профиля">
+                <img class="profile__image" src="<%=require('./images/profile__image.jpg')%>" alt="Фото профиля">
                 <div class="profile__info">
                     <div class="profile__title-container">
                         <h1 class="profile__title" name="userName">Жак-Ив Кусто</h1>
                         <button class="profile__edit-button" type="button"></button>
-                    </div>                
+                    </div>
                     <h2 class="profile__subtitle">Исследователь океана</h2>
                 </div>
             </div>
@@ -77,13 +76,5 @@
                 </div>
         </div>
     </template>
-    <script src="./src/components/cards.js" defer type="module"></script>
-    <script src="./src/components/settingsForValidation.js" defer type="module"></script>
-    <script src="./src/pages/index.js" defer type="module"></script>
-    <script src="./src/components/Card.js" defer type="module"></script>
-    <script src="./src/components/FormValidator.js" defer type="module"></script>
-    <script src="./src/components/PopupWithImage.js" defer type="module"></script>
-    <script src="./src/components/Popup.js" defer type="module"></script>
-    <script src="./src/components/PopupWithForm.js" defer type="module"></script>
 </body>
 </html>
