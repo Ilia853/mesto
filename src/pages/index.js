@@ -4,20 +4,21 @@ import { FormValidator } from '../components/FormValidator.js';
 import { initialCards } from '../constants/cards.js';
 import { settings } from '../constants/settingsForValidation.js';
 import { Section } from '../components/Section.js'
-import { Popup } from '../components/Popup.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const popupCloseButton = document.querySelector('.popup__close-button_type_edit');
-const imagePopupCloseButton = document.querySelector('.image-popup__close-button');
+const imagePopupCloseButton = document.querySelector('.popup__close-button_type_image');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_job');
 const popupFormTypeEdit = document.querySelector('.popup__form_type_edit');
 const popupFormTypeMesto = document.querySelector('.popup__form_type_mesto');
 const mestoAddButton = document.querySelector('.profile__add-button');
 const mestoAddCloseButton = document.querySelector('.popup__close-button_type_mesto');
+
+const popupWithImage = new PopupWithImage ('.image-popup');
 
 function renderCard (item) {
     const card = new Card({
@@ -34,7 +35,6 @@ function renderCard (item) {
 }
 
 const cardList = new Section ({
-    items: initialCards,
     renderer: (item) => {
         const cardElement = renderCard(item);
         cardList.addItem(cardElement);
@@ -42,7 +42,7 @@ const cardList = new Section ({
     '.elements__list'
 )
 
-cardList.renderItems();
+cardList.renderItems(initialCards);
 
 const newCard = new PopupWithForm ({
     popupSelector: '.popup_type_mesto', 
@@ -68,31 +68,27 @@ const changeUserInfo = new PopupWithForm ({
 
 changeUserInfo.setEventListeners();
 
-const popupWithImage = new PopupWithImage ('.image-popup');
-
-const openProfilePopup = new Popup ('.popup_type_edit');
 profileEditButton.addEventListener('click', () => {
     nameInput.value = userInfo.getUserInfo().userName;
     jobInput.value = userInfo.getUserInfo().userJob;
-    openProfilePopup.open();
-})
-popupCloseButton.addEventListener('click', () => {
-    openProfilePopup.setEventListeners();
+    changeUserInfo.open();
 })
 
-const openAddMestoPopup = new Popup ('.popup_type_mesto');
+popupCloseButton.addEventListener('click', () => {
+    changeUserInfo.setEventListeners();
+})
+
 mestoAddButton.addEventListener('click', () => {
     formValidatorMesto.disableButton();
-    openAddMestoPopup.open();
+    newCard.open();
 })
 mestoAddCloseButton.addEventListener('click', () => {
-    openAddMestoPopup.setEventListeners();
+    newCard.setEventListeners();
     formValidatorMesto.disableButton();
 })
 
-const closeImagePopup = new Popup ('.image-popup');
 imagePopupCloseButton.addEventListener('click', () => {
-    closeImagePopup.setEventListeners();
+    popupWithImage.setEventListeners();
 })
 
 const formValidatorMesto = new FormValidator (popupFormTypeMesto, settings);
