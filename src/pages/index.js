@@ -9,8 +9,6 @@ import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
-const popupCloseButton = document.querySelector('.popup__close-button_type_edit');
-const imagePopupCloseButton = document.querySelector('.popup__close-button_type_image');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_job');
 const popupFormTypeEdit = document.querySelector('.popup__form_type_edit');
@@ -74,21 +72,12 @@ profileEditButton.addEventListener('click', () => {
     changeUserInfo.open();
 })
 
-popupCloseButton.addEventListener('click', () => {
-    changeUserInfo.setEventListeners();
-})
-
 mestoAddButton.addEventListener('click', () => {
     formValidatorMesto.disableButton();
     newCard.open();
 })
 mestoAddCloseButton.addEventListener('click', () => {
-    newCard.setEventListeners();
     formValidatorMesto.disableButton();
-})
-
-imagePopupCloseButton.addEventListener('click', () => {
-    popupWithImage.setEventListeners();
 })
 
 const formValidatorMesto = new FormValidator (popupFormTypeMesto, settings);

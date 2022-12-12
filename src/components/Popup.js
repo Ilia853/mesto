@@ -9,14 +9,11 @@ export class Popup {
     open () {
         this._popup.classList.add('image-popup_opened');
         document.addEventListener('keydown', this._handleEscCloseRef);
-        this._popup.addEventListener('click', this._closeViaOverlayRef);
     }
 
     close () {
         this._popup.classList.remove('image-popup_opened');
-        document.removeEventListener('keydown', () => {
-            this._handleEscCloseRef;
-        });
+        document.removeEventListener('keydown', this._handleEscCloseRef);
     }
 
     _handleEscClose (evt) {
@@ -32,11 +29,9 @@ export class Popup {
     }
 
     setEventListeners () {
-        const closeButton = document.querySelector('.popup__close-button');
-        closeButton.addEventListener('click', this.close());
-    
-        this._popup.removeEventListener('click', () => {
-            this._closeViaOverlayRef;
-        });
+        this._popup.addEventListener('click', this._closeViaOverlayRef);
+
+        const closeButton = this._popup.querySelector('.popup__close-button');
+        closeButton.addEventListener('click', () => this.close());
     }
 }
