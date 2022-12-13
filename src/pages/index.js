@@ -18,11 +18,13 @@ const mestoAddCloseButton = document.querySelector('.popup__close-button_type_me
 
 const popupWithImage = new PopupWithImage ('.image-popup');
 
+popupWithImage.setEventListeners();
+
 function renderCard (item) {
     const card = new Card({
         data: item,
         handleCardClick: () => {
-            popupWithImage.zoomImage(item.name, item.link);
+            popupWithImage.open(item.name, item.link);
         }
     },
     '.card-element');
