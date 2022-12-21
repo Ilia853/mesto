@@ -7,6 +7,20 @@ import { Section } from '../components/Section.js'
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
+import { api } from '../components/Api.js';
+
+api.getProfile()
+    .then(res => {
+        console.log(res);
+        userInfo.setUserInfo(res)
+    })
+    .catch(console.log);
+
+api.getInitialCards()
+    .then(res => {
+        console.log(res);
+        cardList.renderItems(res)
+    })
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const nameInput = document.querySelector('.popup__input_type_name');
@@ -42,13 +56,18 @@ const cardList = new Section ({
     '.elements__list'
 )
 
-cardList.renderItems(initialCards);
+// cardList.renderItems(initialCards);
 
 const newCard = new PopupWithForm ({
     popupSelector: '.popup_type_mesto', 
     handleFormSubmit: (item) => {
-        const cardElementNew = renderCard(item);
-        cardList.addItem(cardElementNew);
+
+        api.addImage(item.name, item.link, item.likes)
+            .then(res => {
+                console.log('res', res);
+                const cardElementNew = renderCard(res)
+                cardList.addItem(cardElementNew)
+            })
     }
 })
 
@@ -62,15 +81,18 @@ const userInfo = new UserInfo ({
 const changeUserInfo = new PopupWithForm ({
     popupSelector: '.popup_type_edit',
     handleFormSubmit: (userData) => {
-        userInfo.setUserInfo(userData);
+        api.editProfile(userData.name, userData.about)
+            .then(userData => {
+                userInfo.setUserInfo(userData);
+            })
     }
 })
 
 changeUserInfo.setEventListeners();
 
 profileEditButton.addEventListener('click', () => {
-    nameInput.value = userInfo.getUserInfo().userName;
-    jobInput.value = userInfo.getUserInfo().userJob;
+    nameInput.value = userInfo.getUserInfo().name;
+    jobInput.value = userInfo.getUserInfo().about;
     changeUserInfo.open();
 })
 

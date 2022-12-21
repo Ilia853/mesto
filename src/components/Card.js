@@ -12,6 +12,11 @@ export class Card {
         return card;
     }
 
+    _setLikes () {
+        this._likeScore = this._element.querySelector('.element__like-score');
+        this._likeScore.textContent = this._data.likes.length;
+    }
+
     createCard () {
         this._element = this._getCard();
         this._cardImage = this._element.querySelector('.element__image');
@@ -21,6 +26,8 @@ export class Card {
         this._cardImage.src = this._data.link;
         this._element.querySelector('.element__title').textContent = this._data.name;
         this._cardImage.alt = this._data.name;
+
+        this._setLikes();
 
 
         return this._element;

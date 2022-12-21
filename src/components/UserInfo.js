@@ -7,15 +7,15 @@ export class UserInfo {
 
     getUserInfo () {
         const userData = {
-            userName: this._userTitle.textContent,
-            userJob: this._userSubtitle.textContent
+            name: this._userTitle.textContent,
+            about: this._userSubtitle.textContent
         }
 
         return userData;
     }
 
     setUserInfo (userData) {
-        this._userTitle.textContent = userData.userName;
-        this._userSubtitle.textContent = userData.userJob;
+        this._userTitle.textContent = userData.name;
+        this._userSubtitle.textContent = userData.about;
     }
 }
