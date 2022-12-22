@@ -46,6 +46,15 @@ class Api {
         .then(res => res.ok ? res.json() : Promise.reject(res.statusText))
         .catch(console.log)
     }
+
+    delImage (cardId) {
+        return fetch(`${this._baseUrl}/cards/${cardId}`, {
+            method: 'DELETE',
+            headers: this._headers
+        })
+        .then(res => res.ok ? res.json() : Promise.reject(res.statusText))
+        .catch(console.log)
+    }
   
     // другие методы работы с API
 }

@@ -9,19 +9,6 @@ import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { api } from '../components/Api.js';
 
-api.getProfile()
-    .then(res => {
-        console.log(res);
-        userInfo.setUserInfo(res)
-    })
-    .catch(console.log);
-
-api.getInitialCards()
-    .then(res => {
-        console.log(res);
-        cardList.renderItems(res)
-    })
-
 const profileEditButton = document.querySelector('.profile__edit-button');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_job');
@@ -29,6 +16,22 @@ const popupFormTypeEdit = document.querySelector('.popup__form_type_edit');
 const popupFormTypeMesto = document.querySelector('.popup__form_type_mesto');
 const mestoAddButton = document.querySelector('.profile__add-button');
 const mestoAddCloseButton = document.querySelector('.popup__close-button_type_mesto');
+
+let profileId;
+
+api.getProfile()
+    .then(res => {
+        console.log(res);
+        userInfo.setUserInfo(res)
+        profileId = res._id;
+    })
+    .catch(console.log);
+
+api.getInitialCards()
+    .then(res => {
+        console.log('res', res)
+        cardList.renderItems(res)
+    })
 
 const popupWithImage = new PopupWithImage ('.image-popup');
 
@@ -39,9 +42,22 @@ function renderCard (item) {
         data: item,
         handleCardClick: () => {
             popupWithImage.open(item.name, item.link);
+        },
+        handleCardDelete: (imageId) => {
+            deleteCard.open();
+            console.log(imageId);
+            deleteCard.changeHandleFormSubmit(() => {
+                api.delImage(imageId)
+                    .then(res => {
+                        card.delImage();
+                        console.log(res);
+                    })
+            })
+            console.log('del button was clicked');
         }
     },
-    '.card-element');
+    '.card-element',
+    profileId);
 
     const cardElement = card.createCard();
 
@@ -56,15 +72,12 @@ const cardList = new Section ({
     '.elements__list'
 )
 
-// cardList.renderItems(initialCards);
-
 const newCard = new PopupWithForm ({
     popupSelector: '.popup_type_mesto', 
     handleFormSubmit: (item) => {
 
         api.addImage(item.name, item.link, item.likes)
             .then(res => {
-                console.log('res', res);
                 const cardElementNew = renderCard(res)
                 cardList.addItem(cardElementNew)
             })
@@ -89,6 +102,12 @@ const changeUserInfo = new PopupWithForm ({
 })
 
 changeUserInfo.setEventListeners();
+
+const deleteCard = new PopupWithForm ({
+    popupSelector: '.popup_type_delete-card'
+})
+
+deleteCard.setEventListeners();
 
 profileEditButton.addEventListener('click', () => {
     nameInput.value = userInfo.getUserInfo().name;
