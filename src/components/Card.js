@@ -1,10 +1,11 @@
 export class Card {
 
-    constructor ({data, handleCardClick, handleCardDelete}, templateSelector, profileId) {
+    constructor ({data, handleCardClick, handleCardDelete, handleCardLike}, templateSelector, profileId) {
         this._data = data;
         this._templateSelector = templateSelector;
         this._handleCardClick = handleCardClick;
         this._handleCardDelete = handleCardDelete;
+        this._handleCardLike = handleCardLike;
         this._profileId = profileId;
     }
 
@@ -14,9 +15,23 @@ export class Card {
         return card;
     }
 
-    _setLikes () {
+    isLiked () {
+        const isCardLiked = this._data.likes.find(user => user._id === this._profileId)
+
+        return isCardLiked;
+    }
+
+    setLikes (likeAmount) {
+        this._data.likes = likeAmount;
         this._likeScore = this._element.querySelector('.element__like-score');
         this._likeScore.textContent = this._data.likes.length;
+
+        
+        if (this.isLiked()) {
+            this._blackHeart();
+        } else {
+            this._whiteHeart();
+        }
     }
 
     createCard () {
@@ -29,7 +44,7 @@ export class Card {
         this._element.querySelector('.element__title').textContent = this._data.name;
         this._cardImage.alt = this._data.name;
 
-        this._setLikes();
+        this.setLikes(this._data.likes);
 
         if (this._data.owner._id !== this._profileId) {
             this._element.querySelector('.element__del-button').style.display = 'none'
@@ -42,7 +57,7 @@ export class Card {
         this._likeButton = this._element.querySelector('.element__like-button');
 
         this._likeButton.addEventListener('click', () => {
-            this._changeLike();
+            this._handleCardLike(this._data._id);
         });
 
         this._element.querySelector('.element__del-button').addEventListener('click', () => {
@@ -54,8 +69,12 @@ export class Card {
         })
     }
 
-    _changeLike () {
-        this._likeButton.classList.toggle('element__like-button_active');
+    _blackHeart () {
+        this._likeButton.classList.add('element__like-button_active');
+    }
+
+    _whiteHeart () {
+        this._likeButton.classList.remove('element__like-button_active');
     }
 
     delImage () {

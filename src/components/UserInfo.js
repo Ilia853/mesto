@@ -1,8 +1,9 @@
 export class UserInfo {
 
-    constructor ({ userTitle, userSubtitle }) {
+    constructor ({ userTitle, userSubtitle, userAvatar }) {
         this._userTitle = document.querySelector(userTitle);
         this._userSubtitle = document.querySelector(userSubtitle);
+        this._userAvatar = document.querySelector(userAvatar);
     }
 
     getUserInfo () {
@@ -17,5 +18,6 @@ export class UserInfo {
     setUserInfo (userData) {
         this._userTitle.textContent = userData.name;
         this._userSubtitle.textContent = userData.about;
+        this._userAvatar.src = userData.avatar;
     }
 }

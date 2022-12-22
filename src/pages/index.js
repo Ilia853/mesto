@@ -1,7 +1,7 @@
 import './index.css';
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
-import { initialCards } from '../constants/cards.js';
+//import { initialCards } from '../constants/cards.js';
 import { settings } from '../constants/settingsForValidation.js';
 import { Section } from '../components/Section.js'
 import { PopupWithImage } from '../components/PopupWithImage.js';
@@ -10,10 +10,12 @@ import { UserInfo } from '../components/UserInfo.js';
 import { api } from '../components/Api.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
+const avatarImage = document.querySelector('.profile__image');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_job');
 const popupFormTypeEdit = document.querySelector('.popup__form_type_edit');
 const popupFormTypeMesto = document.querySelector('.popup__form_type_mesto');
+const popupFormTypeAvatar = document.querySelector('.popup__form_type_avatar');
 const mestoAddButton = document.querySelector('.profile__add-button');
 const mestoAddCloseButton = document.querySelector('.popup__close-button_type_mesto');
 
@@ -54,6 +56,21 @@ function renderCard (item) {
                     })
             })
             console.log('del button was clicked');
+        },
+        handleCardLike: (imageId ) => {
+            if (card.isLiked()) {
+                api.delLike(imageId)
+                .then(res => {
+                    card.setLikes(res.likes)
+                    //console.log(res);
+                })
+            } else {
+                api.addLike(imageId)
+                .then(res => {
+                    card.setLikes(res.likes)
+                    //console.log(res);
+                })
+            }
         }
     },
     '.card-element',
@@ -88,7 +105,8 @@ newCard.setEventListeners();
 
 const userInfo = new UserInfo ({
     userTitle: '.profile__title',
-    userSubtitle: '.profile__subtitle'
+    userSubtitle: '.profile__subtitle',
+    userAvatar: '.profile__image'
 })
 
 const changeUserInfo = new PopupWithForm ({
@@ -108,6 +126,24 @@ const deleteCard = new PopupWithForm ({
 })
 
 deleteCard.setEventListeners();
+
+const changeAvatar = new PopupWithForm ({
+    popupSelector: '.popup_type_avatar',
+    handleFormSubmit: (userData) => {
+        console.log(userData);
+        api.changeAvatar(userData.avatar)
+            .then(userData => {
+                userInfo.setUserInfo(userData);
+            })
+        }
+    }
+)
+
+changeAvatar.setEventListeners();
+
+avatarImage.addEventListener('click', () => {
+    changeAvatar.open();
+})
 
 profileEditButton.addEventListener('click', () => {
     nameInput.value = userInfo.getUserInfo().name;
@@ -130,3 +166,7 @@ formValidatorMesto.enableValidation();
 const formValidatorProfile = new FormValidator (popupFormTypeEdit, settings);
 
 formValidatorProfile.enableValidation();
+
+const formValidatorAvatar = new FormValidator (popupFormTypeAvatar, settings);
+
+formValidatorAvatar.enableValidation();
