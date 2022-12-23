@@ -92,12 +92,16 @@ const cardList = new Section ({
 const newCard = new PopupWithForm ({
     popupSelector: '.popup_type_mesto', 
     handleFormSubmit: (item) => {
-
         api.addImage(item.name, item.link, item.likes)
             .then(res => {
+                newCard.renderLoading('Создать')
                 const cardElementNew = renderCard(res)
                 cardList.addItem(cardElementNew)
+                newCard.close();
             })
+            .finally(
+                newCard.renderLoading('Сохранение...')
+            )
     }
 })
 
@@ -114,8 +118,13 @@ const changeUserInfo = new PopupWithForm ({
     handleFormSubmit: (userData) => {
         api.editProfile(userData.name, userData.about)
             .then(userData => {
+                changeUserInfo.renderLoading('Сохранить')
                 userInfo.setUserInfo(userData);
+                changeUserInfo.close();
             })
+            .finally(
+                changeUserInfo.renderLoading('Сохранение...')
+            )
     }
 })
 
@@ -133,8 +142,13 @@ const changeAvatar = new PopupWithForm ({
         console.log(userData);
         api.changeAvatar(userData.avatar)
             .then(userData => {
+                changeAvatar.renderLoading('Сохранить')
                 userInfo.setUserInfo(userData);
+                changeAvatar.close();
             })
+            .finally(
+                changeAvatar.renderLoading('Сохранение...')
+            )
         }
     }
 )
@@ -142,6 +156,7 @@ const changeAvatar = new PopupWithForm ({
 changeAvatar.setEventListeners();
 
 avatarImage.addEventListener('click', () => {
+    formValidatorAvatar.disableButton();
     changeAvatar.open();
 })
 
