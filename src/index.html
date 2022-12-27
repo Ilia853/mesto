@@ -13,7 +13,12 @@
     <main>
         <section class="profile">
             <div class="profile__box">
+            <div class="profile__image-box">
                 <img class="profile__image" src="" alt="Фото профиля">
+                <div class="profile__image_overlay">
+                    <span class="profile__image-edit"></span>
+                </div>
+            </div>
                 <div class="profile__info">
                     <div class="profile__title-container">
                         <h1 class="profile__title" name="name"></h1>
@@ -92,8 +97,10 @@
             <button class="element__del-button" type="button"></button>
                 <div class="element__box">
                     <h2 class="element__title"></h2>
-                    <button class="element__like-button" type="button"></button>
-                    <span class="element__like-score"></span>
+                    <div class="element__like-box">
+                        <button class="element__like-button" type="button"></button>
+                        <span class="element__like-score"></span>
+                    </div>
                 </div>
         </div>
     </template>

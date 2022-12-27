@@ -1,7 +1,6 @@
 import './index.css';
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
-//import { initialCards } from '../constants/cards.js';
 import { settings } from '../constants/settingsForValidation.js';
 import { Section } from '../components/Section.js'
 import { PopupWithImage } from '../components/PopupWithImage.js';
@@ -10,7 +9,7 @@ import { UserInfo } from '../components/UserInfo.js';
 import { api } from '../components/Api.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
-const avatarImage = document.querySelector('.profile__image');
+const avatarImage = document.querySelector('.profile__image_overlay');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_job');
 const popupFormTypeEdit = document.querySelector('.popup__form_type_edit');
@@ -23,16 +22,19 @@ let profileId;
 
 api.getProfile()
     .then(res => {
-        console.log(res);
         userInfo.setUserInfo(res)
         profileId = res._id;
     })
-    .catch(console.log);
+    .catch(err => {
+        console.log('getProfile', err)
+    });
 
 api.getInitialCards()
     .then(res => {
-        console.log('res', res)
         cardList.renderItems(res)
+    })
+    .catch(err => {
+        console.log('getInitialCards', err);
     })
 
 const popupWithImage = new PopupWithImage ('.image-popup');
@@ -47,28 +49,35 @@ function renderCard (item) {
         },
         handleCardDelete: (imageId) => {
             deleteCard.open();
-            console.log(imageId);
             deleteCard.changeHandleFormSubmit(() => {
                 api.delImage(imageId)
                     .then(res => {
-                        card.delImage();
-                        console.log(res);
+                        deleteCard.close()
                     })
+                    .catch(err => {
+                        console.log('delImage', err);
+                    })
+                    .finally(
+                        card.delImage()
+                    )
             })
-            console.log('del button was clicked');
         },
         handleCardLike: (imageId ) => {
             if (card.isLiked()) {
                 api.delLike(imageId)
                 .then(res => {
                     card.setLikes(res.likes)
-                    //console.log(res);
+                })
+                .catch(err => {
+                    console.log('delLike', err);
                 })
             } else {
                 api.addLike(imageId)
                 .then(res => {
                     card.setLikes(res.likes)
-                    //console.log(res);
+                })
+                .catch(err => {
+                    console.log('addLike', err);
                 })
             }
         }
@@ -99,6 +108,9 @@ const newCard = new PopupWithForm ({
                 cardList.addItem(cardElementNew)
                 newCard.close();
             })
+            .catch(err => {
+                console.log('addImage', err);
+            })
             .finally(
                 newCard.renderLoading('Сохранение...')
             )
@@ -122,6 +134,9 @@ const changeUserInfo = new PopupWithForm ({
                 userInfo.setUserInfo(userData);
                 changeUserInfo.close();
             })
+            .catch(err => {
+                console.log('editProfile', err);
+            })
             .finally(
                 changeUserInfo.renderLoading('Сохранение...')
             )
@@ -139,12 +154,14 @@ deleteCard.setEventListeners();
 const changeAvatar = new PopupWithForm ({
     popupSelector: '.popup_type_avatar',
     handleFormSubmit: (userData) => {
-        console.log(userData);
         api.changeAvatar(userData.avatar)
             .then(userData => {
                 changeAvatar.renderLoading('Сохранить')
                 userInfo.setUserInfo(userData);
                 changeAvatar.close();
+            })
+            .catch(err => {
+                console.log('changeAvatar', err);
             })
             .finally(
                 changeAvatar.renderLoading('Сохранение...')

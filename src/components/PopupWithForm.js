@@ -13,8 +13,6 @@ export class PopupWithForm extends Popup {
     renderLoading (text) {
         
             this._submitButton.textContent = text;
-       
-       
     }
 
     _getInputValues () {
@@ -39,23 +37,13 @@ export class PopupWithForm extends Popup {
         this._handleFormSubmit = newHandleSubmit;
     }
 
-    // open () {
-    //     super.open()
-    // }
-
     setEventListeners () {
 
         super.setEventListeners();
 
         this._form.addEventListener('submit', (evt) => {
             evt.preventDefault();
-            const initaialButtonText = this._submitButton.textContent;
-            console.log(initaialButtonText);
-
-            //this._renderLoading(true);
             this._handleFormSubmit(this._getInputValues());
-            // this.close();
-            //this._renderLoading(false, initaialButtonText);
         })
     }
 }
