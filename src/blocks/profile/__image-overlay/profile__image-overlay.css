@@ -1,4 +1,4 @@
-.profile__image_overlay {
+.profile__image-overlay {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -11,7 +11,7 @@
     background: rgba(0, 0, 0, 0.8);
 }
 
-.profile__image_overlay:hover {
+.profile__image-overlay:hover {
     opacity: 1;
     cursor: pointer;
 }

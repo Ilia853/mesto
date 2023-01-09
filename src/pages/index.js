@@ -9,7 +9,7 @@ import { UserInfo } from '../components/UserInfo.js';
 import { api } from '../components/Api.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
-const avatarImage = document.querySelector('.profile__image_overlay');
+const avatarImage = document.querySelector('.profile__image-overlay');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_job');
 const popupFormTypeEdit = document.querySelector('.popup__form_type_edit');
