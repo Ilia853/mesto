@@ -1,0 +1,9 @@
+export const profileEditButton = document.querySelector('.profile__edit-button');
+export const avatarImage = document.querySelector('.profile__image-overlay');
+export const nameInput = document.querySelector('.popup__input_type_name');
+export const jobInput = document.querySelector('.popup__input_type_job');
+export const popupFormTypeEdit = document.querySelector('.popup__form_type_edit');
+export const popupFormTypeMesto = document.querySelector('.popup__form_type_mesto');
+export const popupFormTypeAvatar = document.querySelector('.popup__form_type_avatar');
+export const mestoAddButton = document.querySelector('.profile__add-button');
+export const mestoAddCloseButton = document.querySelector('.popup__close-button_type_mesto');

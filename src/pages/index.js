@@ -7,16 +7,8 @@ import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { api } from '../components/Api.js';
-
-const profileEditButton = document.querySelector('.profile__edit-button');
-const avatarImage = document.querySelector('.profile__image-overlay');
-const nameInput = document.querySelector('.popup__input_type_name');
-const jobInput = document.querySelector('.popup__input_type_job');
-const popupFormTypeEdit = document.querySelector('.popup__form_type_edit');
-const popupFormTypeMesto = document.querySelector('.popup__form_type_mesto');
-const popupFormTypeAvatar = document.querySelector('.popup__form_type_avatar');
-const mestoAddButton = document.querySelector('.profile__add-button');
-const mestoAddCloseButton = document.querySelector('.popup__close-button_type_mesto');
+import { profileEditButton, avatarImage, nameInput, jobInput, popupFormTypeEdit, popupFormTypeMesto, popupFormTypeAvatar,
+        mestoAddButton, mestoAddCloseButton } from '../constants/variables.js';
 
 let profileId;
 
@@ -25,17 +17,20 @@ api.getProfile()
         userInfo.setUserInfo(res)
         profileId = res._id;
     })
+    .then(
+        api.getInitialCards()
+            .then(res => {
+                cardList.renderItems(res)
+            })
+            .catch(err => {
+                console.log('getInitialCards', err);
+            })
+    )
     .catch(err => {
         console.log('getProfile', err)
     });
 
-api.getInitialCards()
-    .then(res => {
-        cardList.renderItems(res)
-    })
-    .catch(err => {
-        console.log('getInitialCards', err);
-    })
+
 
 const popupWithImage = new PopupWithImage ('.image-popup');
 
@@ -54,12 +49,12 @@ function renderCard (item) {
                     .then(res => {
                         deleteCard.close()
                     })
+                    .then(
+                        card.delImage()
+                    )
                     .catch(err => {
                         console.log('delImage', err);
                     })
-                    .finally(
-                        card.delImage()
-                    )
             })
         },
         handleCardLike: (imageId ) => {
@@ -108,12 +103,12 @@ const newCard = new PopupWithForm ({
                 cardList.addItem(cardElementNew)
                 newCard.close();
             })
+            .then(
+                newCard.renderLoading('Сохранение...')
+            )
             .catch(err => {
                 console.log('addImage', err);
             })
-            .finally(
-                newCard.renderLoading('Сохранение...')
-            )
     }
 })
 
@@ -134,12 +129,12 @@ const changeUserInfo = new PopupWithForm ({
                 userInfo.setUserInfo(userData);
                 changeUserInfo.close();
             })
+            .then(
+                changeUserInfo.renderLoading('Сохранение...')
+            )
             .catch(err => {
                 console.log('editProfile', err);
             })
-            .finally(
-                changeUserInfo.renderLoading('Сохранение...')
-            )
     }
 })
 
@@ -160,12 +155,12 @@ const changeAvatar = new PopupWithForm ({
                 userInfo.setUserInfo(userData);
                 changeAvatar.close();
             })
+            .then(
+                changeAvatar.renderLoading('Сохранение...')
+            )
             .catch(err => {
                 console.log('changeAvatar', err);
             })
-            .finally(
-                changeAvatar.renderLoading('Сохранение...')
-            )
         }
     }
 )
