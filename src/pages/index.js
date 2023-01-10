@@ -45,11 +45,11 @@ function renderCard (item) {
         },
         handleCardDelete: (imageId) => {
             deleteCard.open();
-            deleteCard.changeHandleFormSubmit(() => {
+            deleteCard.deleteFormSubmit(() => {
                 api.delImage(imageId)
-                    .then(res => {
+                    .then(
                         deleteCard.close()
-                    })
+                    )
                     .then(
                         card.delImage()
                     )
@@ -141,7 +141,7 @@ const changeUserInfo = new PopupWithForm ({
 
 changeUserInfo.setEventListeners();
 
-const deleteCard = new PopupWithForm ({
+const deleteCard = new PopupDelCard ({
     popupSelector: '.popup_type_delete-card'
 })
 
