@@ -12,4 +12,8 @@ export class Section {
     addItem(element) {
         this._selector.prepend(element);
     }
+
+    addInitaialItems(element) {
+        this._selector.append(element);
+    }
 }

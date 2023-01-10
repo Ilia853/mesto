@@ -7,6 +7,7 @@ import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { api } from '../components/Api.js';
+import { PopupDelCard } from '../components/PopupDelCard.js';
 import { profileEditButton, avatarImage, nameInput, jobInput, popupFormTypeEdit, popupFormTypeMesto, popupFormTypeAvatar,
         mestoAddButton, mestoAddCloseButton } from '../constants/variables.js';
 
@@ -88,7 +89,7 @@ function renderCard (item) {
 const cardList = new Section ({
     renderer: (item) => {
         const cardElement = renderCard(item);
-        cardList.addItem(cardElement);
+        cardList.addInitaialItems(cardElement);
     }},
     '.elements__list'
 )
@@ -173,8 +174,9 @@ avatarImage.addEventListener('click', () => {
 })
 
 profileEditButton.addEventListener('click', () => {
-    nameInput.value = userInfo.getUserInfo().name;
-    jobInput.value = userInfo.getUserInfo().about;
+    const userData = userInfo.getUserInfo();
+    nameInput.value = userData.name;
+    jobInput.value = userData.about;
     changeUserInfo.open();
 })
 
