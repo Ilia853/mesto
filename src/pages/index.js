@@ -13,25 +13,24 @@ import { profileEditButton, avatarImage, nameInput, jobInput, popupFormTypeEdit,
 
 let profileId;
 
-api.getProfile()
+const getProfile = api.getProfile()
     .then(res => {
         userInfo.setUserInfo(res)
         profileId = res._id;
     })
-    .then(
-        api.getInitialCards()
-            .then(res => {
-                cardList.renderItems(res)
-            })
-            .catch(err => {
-                console.log('getInitialCards', err);
-            })
-    )
     .catch(err => {
         console.log('getProfile', err)
     });
 
+const getInitialCards = api.getInitialCards()
+    .then(res => {
+        cardList.renderItems(res)
+    })
+    .catch(err => {
+        console.log('getInitialCards', err);
+    })
 
+Promise.all([getProfile, getInitialCards])
 
 const popupWithImage = new PopupWithImage ('.image-popup');
 
@@ -47,12 +46,10 @@ function renderCard (item) {
             deleteCard.open();
             deleteCard.deleteFormSubmit(() => {
                 api.delImage(imageId)
-                    .then(
+                    .then(cardId => {
+                        card.delImage(cardId)
                         deleteCard.close()
-                    )
-                    .then(
-                        card.delImage()
-                    )
+                    })
                     .catch(err => {
                         console.log('delImage', err);
                     })
@@ -102,7 +99,7 @@ const newCard = new PopupWithForm ({
                 newCard.renderLoading('Создать')
                 const cardElementNew = renderCard(res)
                 cardList.addItem(cardElementNew)
-                newCard.close();
+                newCard.close()
             })
             .then(
                 newCard.renderLoading('Сохранение...')
@@ -110,6 +107,8 @@ const newCard = new PopupWithForm ({
             .catch(err => {
                 console.log('addImage', err);
             })
+            
+            
     }
 })
 
