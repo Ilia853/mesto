@@ -96,19 +96,17 @@ const newCard = new PopupWithForm ({
     handleFormSubmit: (item) => {
         api.addImage(item.name, item.link, item.likes)
             .then(res => {
-                newCard.renderLoading('Создать')
                 const cardElementNew = renderCard(res)
                 cardList.addItem(cardElementNew)
                 newCard.close()
             })
-            .then(
-                newCard.renderLoading('Сохранение...')
-            )
             .catch(err => {
                 console.log('addImage', err);
             })
-            
-            
+            .finally(() =>
+                newCard.renderLoading('Создать')
+            )
+            newCard.renderLoading('Сохранение...')
     }
 })
 
@@ -125,16 +123,17 @@ const changeUserInfo = new PopupWithForm ({
     handleFormSubmit: (userData) => {
         api.editProfile(userData.name, userData.about)
             .then(userData => {
-                changeUserInfo.renderLoading('Сохранить')
                 userInfo.setUserInfo(userData);
                 changeUserInfo.close();
             })
-            .then(
-                changeUserInfo.renderLoading('Сохранение...')
-            )
             .catch(err => {
                 console.log('editProfile', err);
             })
+            .finally(() =>
+                changeUserInfo.renderLoading('Сохранить')
+            )
+            changeUserInfo.renderLoading('Сохранение...')
+
     }
 })
 
@@ -151,16 +150,16 @@ const changeAvatar = new PopupWithForm ({
     handleFormSubmit: (userData) => {
         api.changeAvatar(userData.avatar)
             .then(userData => {
-                changeAvatar.renderLoading('Сохранить')
                 userInfo.setUserInfo(userData);
                 changeAvatar.close();
             })
-            .then(
-                changeAvatar.renderLoading('Сохранение...')
-            )
             .catch(err => {
                 console.log('changeAvatar', err);
             })
+            .finally(() =>
+                changeAvatar.renderLoading('Сохранить')
+            )
+            changeAvatar.renderLoading('Сохранение...')
         }
     }
 )
