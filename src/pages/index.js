@@ -13,24 +13,15 @@ import { profileEditButton, avatarImage, nameInput, jobInput, popupFormTypeEdit,
 
 let profileId;
 
-const getProfile = api.getProfile()
-    .then(res => {
-        userInfo.setUserInfo(res)
-        profileId = res._id;
+Promise.all([api.getProfile(), api.getInitialCards()])
+    .then(([user, cards]) => {
+        userInfo.setUserInfo(user);
+        profileId = user._id;
+        cardList.renderItems(cards);
     })
     .catch(err => {
-        console.log('getProfile', err)
-    });
-
-const getInitialCards = api.getInitialCards()
-    .then(res => {
-        cardList.renderItems(res)
+        console.log('initialData ', err);
     })
-    .catch(err => {
-        console.log('getInitialCards', err);
-    })
-
-Promise.all([getProfile, getInitialCards])
 
 const popupWithImage = new PopupWithImage ('.image-popup');
 
