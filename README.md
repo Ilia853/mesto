@@ -15,4 +15,4 @@
 
 ## Всем спасибо, это всё.
 
-вот [ссылка](https://ilia853.github.io/mesto/) на работу
+Ссылка на работу https://ilia853.github.io/mesto/
